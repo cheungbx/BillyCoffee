@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billy's Coffee - SOE Specialty Coffee & Hand-Drip Bar</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        },
+                        coffee: {
+                            50: '#fdfbf7',
+                            100: '#f6f0e6',
+                            200: '#ebdcc7',
+                            300: '#ddc29f',
+                            400: '#cb9f6e',
+                            500: '#b88147',
+                            600: '#a36838',
+                            700: '#834f2d',
+                            800: '#5c3620',
+                            900: '#3a2113',
+                            950: '#1e1008',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- FontAwesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background-color: #0d0805;
+            color: #f6f0e6;
+        }
+
+        .font-serif-title {
+            font-family: 'Playfair Display', 'Noto Sans TC', serif;
+        }
+
+        /* Glassmorphism effects */
+        .glass-panel {
+            background: rgba(30, 16, 8, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(217, 119, 6, 0.15);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(42, 24, 13, 0.7), rgba(20, 10, 5, 0.8));
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(245, 158, 11, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(217, 119, 6, 0.15);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #140a05;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #5c3620;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b88147;
+        }
+
+        /* Ambient Glow Effect */
+        .ambient-glow {
+            box-shadow: 0 0 50px -10px rgba(217, 119, 6, 0.25);
+        }
+
+        /* Vinyl Spin Animation */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-vinyl {
+            animation: spin-slow 8s linear infinite;
+        }
+        .animate-vinyl-paused {
+            animation-play-state: paused;
+        }
+
+        /* Pulse glow for active brewing stage */
+        @keyframes pulse-amber {
+            0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.7); }
+        }
+        .brewing-active {
+            animation: pulse-amber 2s infinite;
+            border-color: rgba(245, 158, 11, 0.8) !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-amber-50 flex flex-col selection:bg-amber-600 selection:text-white">
+
+    <header class="sticky top-0 z-40 glass-panel border-b border-amber-900/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3">
+                <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-amber-700 via-amber-500 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-900/40">
+                    <i class="fa-solid fa-mug-hot text-coffee-950 text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold font-serif-title tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-500">
+                        Billy's Coffee
+                    </h1>
+                    <p class="text-xs text-amber-400/80 tracking-widest uppercase font-medium">SOE Single Origin Micro-Roastery</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium">
+                <a href="#inventory" class="px-3 py-2 rounded-lg hover:bg-amber-950/60 text-amber-200 hover:text-amber-400 transition flex items-center gap-2">
+                    <i class="fa-solid fa-seedling text-amber-500"></i> Bean Inventory
+                </a>
+                <a href="#timer" class="px-3 py-2 rounded-lg hover:bg-amber-950/60 text-amber-200 hover:text-amber-400 transition flex items-center gap-2">
+                    <i class="fa-solid fa-stopwatch text-amber-500"></i> 4:6 Method Timer
+                </a>
+                <a href="#calculator" class="px-3 py-2 rounded-lg hover:bg-amber-950/60 text-amber-200 hover:text-amber-400 transition flex items-center gap-2">
+                    <i class="fa-solid fa-calculator text-amber-500"></i> Recipe Calculator
+                </a>
+            </nav>
+
+            <!-- Quick Action Badges -->
+            <div class="flex items-center space-x-3">
+                <button onclick="scrollToTimer()" class="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-medium px-4 py-2 rounded-xl text-sm shadow-md transition-all flex items-center gap-2 border border-amber-400/30">
+                    <i class="fa-solid fa-droplet text-yellow-300 animate-bounce"></i>
+                    <span>Start Drip</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative overflow-hidden py-12 lg:py-20 border-b border-amber-900/30">
+        <!-- Background Ambient Glows & Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1920&q=80" 
+                 alt="Coffee Hand Drip Background" 
+                 class="w-full h-full object-cover object-center opacity-20 filter blur-xs"
+                 onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\' viewBox=\'0 0 800 400\'><rect width=\'100%\' height=\'100%\' fill=\'%231e1008\'/><circle cx=\'400\' cy=\'200\' r=\'150\' fill=\'%233a2113\' opacity=\'0.5\'/></svg>';">
+            <div class="absolute inset-0 bg-gradient-to-b from-coffee-950/80 via-coffee-950/95 to-[#0d0805]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Main Hero Copy -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-950/80 border border-amber-600/30 text-amber-400 text-xs font-semibold tracking-wider uppercase">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        Hand-Drip SOE & Micro-Lot Inventory Active
+                    </div>
+                    
+                    <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-serif-title leading-tight text-amber-100">
+                        Crafting Pure Expression In Every <span class="bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-200 bg-clip-text text-transparent">Single Origin Pour</span>
+                    </h2>
+                    
+                    <p class="text-amber-200/80 text-base sm:text-lg max-w-2xl font-light leading-relaxed">
+                        Explore Billy's curated collection of SOE roasted beans and rare green coffee lots with gorgeous imagery and rich flavor profiles. Experience precision brewing with our interactive Tetsu Kasuya 4:6 Method timer.
+                    </p>
+
+                    <!-- Inventory Summary Counters -->
+                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-amber-900/40 max-w-lg">
+                        <div class="bg-amber-950/40 p-3.5 rounded-xl border border-amber-900/30">
+                            <span class="block text-2xl font-bold text-amber-400" id="stat-roasted-count">13</span>
+                            <span class="text-xs text-amber-300/70 font-medium">SOE Roasted Lots</span>
+                        </div>
+                        <div class="bg-amber-950/40 p-3.5 rounded-xl border border-amber-900/30">
+                            <span class="block text-2xl font-bold text-yellow-400" id="stat-roasted-stock">1,413g</span>
+                            <span class="text-xs text-amber-300/70 font-medium">Roasted Stock</span>
+                        </div>
+                        <div class="bg-amber-950/40 p-3.5 rounded-xl border border-amber-900/30">
+                            <span class="block text-2xl font-bold text-emerald-400" id="stat-green-stock">1,159g</span>
+                            <span class="text-xs text-amber-300/70 font-medium">Green Lot Stock</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5">
+                    <div class="glass-card p-6 rounded-2xl relative overflow-hidden shadow-2xl border border-amber-500/20">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-music text-amber-400 text-xl"></i>
+                                <div>
+                                    <h3 class="text-base font-semibold text-amber-100">Coffee House Slow Jazz</h3>
+                                    <p class="text-xs text-amber-400/80">Procedural Synth & Cafe Ambience</p>
+                                </div>
+                            </div>
+                            <span id="jazz-status-badge" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-950 text-amber-400 border border-amber-800">
+                                Paused
+                            </span>
+                        </div>
+
+                        <!-- Vinyl Visualization -->
+                        <div class="flex items-center justify-center my-6">
+                            <div class="relative w-32 h-32 rounded-full bg-zinc-900 border-4 border-amber-950 flex items-center justify-center shadow-inner group">
+                                <div id="vinyl-disc" class="w-full h-full rounded-full bg-gradient-to-tr from-black via-zinc-900 to-zinc-800 flex items-center justify-center animate-vinyl animate-vinyl-paused border border-amber-900/30">
+                                    <div class="w-12 h-12 rounded-full bg-amber-700/80 border-2 border-amber-400 flex items-center justify-center">
+                                        <div class="w-3 h-3 rounded-full bg-black"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Audio Controls -->
+                        <div class="space-y-4">
+                            <button id="btn-play-jazz" onclick="toggleJazzPlayer()" class="w-full py-3 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-semibold transition flex items-center justify-center gap-2 shadow-lg shadow-amber-900/50">
+                                <i id="jazz-play-icon" class="fa-solid fa-play"></i>
+                                <span id="jazz-play-text">Play Coffee House Jazz</span>
+                            </button>
+
+                            <div class="flex items-center justify-between gap-4 text-xs text-amber-300/80">
+                                <span class="flex items-center gap-1.5">
+                                    <i class="fa-solid fa-volume-high"></i> Volume
+                                </span>
+                                <input type="range" id="jazz-volume" min="0" max="1" step="0.05" value="0.4" oninput="updateJazzVolume(this.value)" class="w-2/3 accent-amber-500 h-1.5 bg-amber-950 rounded-lg cursor-pointer">
+                            </div>
+
+                            <div class="flex justify-between items-center text-xs pt-2 border-t border-amber-900/30">
+                                <label class="flex items-center gap-2 cursor-pointer text-amber-300/90">
+                                    <input type="checkbox" id="check-vinyl-crackle" checked onchange="toggleCrackle(this.checked)" class="rounded border-amber-800 text-amber-600 focus:ring-amber-500 bg-amber-950">
+                                    <span>Analog Vinyl Crackle</span>
+                                </label>
+                                <span class="text-amber-500 font-mono">72 BPM • Am9/Dm9</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- INVENTORY SECTION -->
+        <section id="inventory" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-amber-400 text-xs font-semibold uppercase tracking-wider">
+                        <i class="fa-solid fa-boxes-stacked"></i> Micro-Lot Cellar
+                    </div>
+                    <h2 class="text-3xl font-bold font-serif-title text-amber-100">SOE Bean Inventories</h2>
+                </div>
+
+                <!-- Tabs & Search Controls -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-amber-500/70 text-sm"></i>
+                        <input type="text" id="inventory-search" placeholder="Search region, farm, or process..." oninput="filterInventory()" class="w-full sm:w-64 pl-9 pr-4 py-2 bg-coffee-950 border border-amber-900/50 rounded-xl text-sm text-amber-100 focus:outline-none focus:border-amber-500 transition">
+                    </div>
+
+                    <!-- Category Filter Tabs -->
+                    <div class="flex bg-coffee-950 p-1 rounded-xl border border-amber-900/50 text-xs font-medium">
+                        <button onclick="switchInventoryTab('all')" id="tab-all" class="px-3 py-1.5 rounded-lg bg-amber-600 text-white font-semibold transition">All Beans</button>
+                        <button onclick="switchInventoryTab('roasted')" id="tab-roasted" class="px-3 py-1.5 rounded-lg text-amber-300 hover:text-amber-100 transition">熟豆 SOE</button>
+                        <button onclick="switchInventoryTab('green')" id="tab-green" class="px-3 py-1.5 rounded-lg text-amber-300 hover:text-amber-100 transition">生豆 SOE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Origin Filters Pills -->
+            <div class="flex flex-wrap gap-2 text-xs">
+                <button onclick="filterOrigin('all')" class="origin-btn active px-3 py-1 rounded-full border border-amber-700/50 bg-amber-950 text-amber-300 hover:bg-amber-900 transition font-bold">All Origins</button>
+                <button onclick="filterOrigin('埃塞俄比亞')" class="origin-btn px-3 py-1 rounded-full border border-amber-900/40 bg-coffee-950/60 text-amber-400 hover:bg-amber-900 transition">Ethiopia (埃塞俄比亞)</button>
+                <button onclick="filterOrigin('哥倫比亞')" class="origin-btn px-3 py-1 rounded-full border border-amber-900/40 bg-coffee-950/60 text-amber-400 hover:bg-amber-900 transition">Colombia (哥倫比亞)</button>
+                <button onclick="filterOrigin('巴西')" class="origin-btn px-3 py-1 rounded-full border border-amber-900/40 bg-coffee-950/60 text-amber-400 hover:bg-amber-900 transition">Brazil (巴西)</button>
+                <button onclick="filterOrigin('雲南')" class="origin-btn px-3 py-1 rounded-full border border-amber-900/40 bg-coffee-950/60 text-amber-400 hover:bg-amber-900 transition">Yunnan (雲南)</button>
+                <button onclick="filterOrigin('印尼')" class="origin-btn px-3 py-1 rounded-full border border-amber-900/40 bg-coffee-950/60 text-amber-400 hover:bg-amber-900 transition">Indonesia (印尼)</button>
+            </div>
+
+            <!-- Inventory Grid Container -->
+            <div id="inventory-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamic Content Rendered Here via JS -->
+            </div>
+        </section>
+
+        <section id="timer" class="space-y-8 scroll-mt-24">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-amber-500/30 relative overflow-hidden">
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Section Title -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-amber-900/40">
+                    <div>
+                        <div class="flex items-center gap-2 text-amber-400 text-xs font-semibold uppercase tracking-wider">
+                            <i class="fa-solid fa-flask"></i> Tetsu Kasuya Championship Recipe
+                        </div>
+                        <h2 class="text-3xl font-bold font-serif-title text-amber-100">4:6 Method Hand-Drip Timer</h2>
+                        <p class="text-xs text-amber-300/70 mt-1">40% water adjusts Acidity vs Sweetness • 60% water adjusts Flavor Strength</p>
+                    </div>
+
+                    <!-- Selected Bean Badge -->
+                    <div id="timer-active-bean-display" class="bg-amber-950/80 px-4 py-2 rounded-xl border border-amber-700/40 flex items-center gap-3">
+                        <i class="fa-solid fa-mug-saucer text-amber-400"></i>
+                        <div>
+                            <span class="block text-xs text-amber-400/80 uppercase font-medium">Selected SOE Bean</span>
+                            <span id="current-bean-name" class="text-sm font-semibold text-amber-100">埃塞俄比亞 瑰夏 日曬</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timer Controls & Config Layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8 items-start">
+                    
+                    <!-- Left: Parameters Configurator -->
+                    <div class="lg:col-span-5 space-y-5 bg-coffee-950/80 p-5 rounded-2xl border border-amber-900/40">
+                        <h3 class="text-sm font-bold text-amber-200 uppercase tracking-wide flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-amber-500"></i> Brew Parameters
+                        </h3>
+
+                        <!-- Ground Coffee Weight Input -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <label class="text-amber-300 font-medium">Coffee Ground Dose</label>
+                                <span class="text-amber-400 font-mono font-bold" id="val-dose">15 g</span>
+                            </div>
+                            <input type="range" id="input-dose" min="10" max="30" step="1" value="15" oninput="updateBrewCalculation()" class="w-full accent-amber-500 h-2 bg-amber-950 rounded-lg cursor-pointer">
+                        </div>
+
+                        <!-- Water Ratio Selector -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <label class="text-amber-300 font-medium">Brewing Ratio</label>
+                                <span class="text-amber-400 font-mono font-bold" id="val-ratio">1 : 15</span>
+                            </div>
+                            <input type="range" id="input-ratio" min="12" max="18" step="0.5" value="15" oninput="updateBrewCalculation()" class="w-full accent-amber-500 h-2 bg-amber-950 rounded-lg cursor-pointer">
+                        </div>
+
+                        <!-- Taste Preference (First 40%) -->
+                        <div>
+                            <label class="block text-xs text-amber-300 font-medium mb-1.5">Acidity / Sweetness Balance (First 40%)</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button type="button" onclick="setTasteBias('sweet')" id="btn-bias-sweet" class="bias-btn py-2 text-xs rounded-xl border border-amber-800 bg-amber-950 text-amber-300 hover:border-amber-500 font-medium transition">Sweeter</button>
+                                <button type="button" onclick="setTasteBias('balance')" id="btn-bias-balance" class="bias-btn active py-2 text-xs rounded-xl border border-amber-500 bg-amber-600 text-white font-semibold transition">Balanced</button>
+                                <button type="button" onclick="setTasteBias('bright')" id="btn-bias-bright" class="bias-btn py-2 text-xs rounded-xl border border-amber-800 bg-amber-950 text-amber-300 hover:border-amber-500 font-medium transition">Brighter</button>
+                            </div>
+                        </div>
+
+                        <!-- Strength Preference (Remaining 60%) -->
+                        <div>
+                            <label class="block text-xs text-amber-300 font-medium mb-1.5">Strength / Body (Remaining 60%)</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button type="button" onclick="setStrengthBias('light')" id="btn-strength-light" class="strength-btn py-2 text-xs rounded-xl border border-amber-800 bg-amber-950 text-amber-300 hover:border-amber-500 font-medium transition">2 Pours (Lighter)</button>
+                                <button type="button" onclick="setStrengthBias('medium')" id="btn-strength-medium" class="strength-btn active py-2 text-xs rounded-xl border border-amber-500 bg-amber-600 text-white font-semibold transition">3 Pours (Standard)</button>
+                                <button type="button" onclick="setStrengthBias('strong')" id="btn-strength-strong" class="strength-btn py-2 text-xs rounded-xl border border-amber-800 bg-amber-950 text-amber-300 hover:border-amber-500 font-medium transition">4 Pours (Stronger)</button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Summary Grid -->
+                        <div class="pt-3 border-t border-amber-900/40 grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-amber-950/60 p-2.5 rounded-lg border border-amber-900/30">
+                                <span class="text-amber-400/80 block">Total Target Water:</span>
+                                <span id="summary-total-water" class="text-base font-bold text-amber-200 font-mono">225 g</span>
+                            </div>
+                            <div class="bg-amber-950/60 p-2.5 rounded-lg border border-amber-900/30">
+                                <span class="text-amber-400/80 block">Recommended Temp:</span>
+                                <span id="summary-temp" class="text-base font-bold text-amber-200 font-mono">91 - 93 °C</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Timer Visualizer -->
+                    <div class="lg:col-span-7 flex flex-col items-center justify-center space-y-6">
+                        
+                        <!-- Circular Digital Clock -->
+                        <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
+                            <!-- SVG Progress Ring -->
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="5" class="text-coffee-950" fill="transparent" />
+                                <circle id="timer-progress-ring" cx="50" cy="50" r="44" stroke="currentColor" stroke-width="5" class="text-amber-500 transition-all duration-300" fill="transparent" stroke-dasharray="276.46" stroke-dashoffset="276.46" stroke-linecap="round" />
+                            </svg>
+
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                                <span id="timer-stage-label" class="text-xs uppercase font-semibold text-amber-400 tracking-wider mb-1">Ready To Pour</span>
+                                <span id="timer-display" class="text-5xl sm:text-6xl font-bold font-mono tracking-tight text-amber-100">00:00</span>
+                                <div class="mt-2 text-xs text-amber-300/80 font-mono bg-amber-950/80 px-3 py-1 rounded-full border border-amber-800/40">
+                                    Target: <span id="timer-target-weight" class="text-amber-400 font-bold">0 g</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Action Buttons -->
+                        <div class="flex items-center space-x-4 w-full max-w-sm">
+                            <button id="btn-timer-start" onclick="toggleTimer()" class="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-coffee-950 font-bold text-base shadow-lg shadow-amber-900/40 transition flex items-center justify-center gap-2">
+                                <i id="timer-play-icon" class="fa-solid fa-play"></i>
+                                <span id="timer-play-text">Start Pouring</span>
+                            </button>
+                            <button onclick="resetTimer()" class="px-5 py-3.5 rounded-xl bg-coffee-950 hover:bg-amber-950 text-amber-300 border border-amber-900/50 font-medium transition">
+                                <i class="fa-solid fa-rotate-right"></i> Reset
+                            </button>
+                        </div>
+
+                        <!-- Pour Breakdown Cards Timeline -->
+                        <div class="w-full space-y-2 pt-2" id="pour-schedule-timeline">
+                            <!-- Dynamically Generated Pour Steps -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="calculator" class="grid grid-cols-1 lg:grid-cols-2 gap-8 scroll-mt-24">
+            
+            <!-- Custom Ratio Calculator Card -->
+            <div class="glass-card p-6 rounded-2xl border border-amber-900/40 space-y-4">
+                <div class="flex items-center space-x-3 text-amber-400">
+                    <i class="fa-solid fa-calculator text-2xl"></i>
+                    <h3 class="text-xl font-bold font-serif-title text-amber-100">Custom Brew Ratio Calculator</h3>
+                </div>
+                <p class="text-xs text-amber-300/70">
+                    Quickly calculate ground coffee needed for your server or dose size.
+                </p>
+
+                <div class="space-y-4 pt-2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-amber-300 mb-1">Target Yield (ml / g)</label>
+                            <input type="number" id="calc-water" value="300" min="50" max="1000" oninput="calculateCustomRatio('water')" class="w-full bg-coffee-950 border border-amber-900/60 rounded-xl px-3 py-2 text-sm font-mono text-amber-100 focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-amber-300 mb-1">Ratio (1 : X)</label>
+                            <input type="number" id="calc-ratio" value="15" step="0.5" min="10" max="20" oninput="calculateCustomRatio('ratio')" class="w-full bg-coffee-950 border border-amber-900/60 rounded-xl px-3 py-2 text-sm font-mono text-amber-100 focus:outline-none focus:border-amber-500">
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-950/60 p-4 rounded-xl border border-amber-800/40 text-center">
+                        <span class="block text-xs text-amber-400 uppercase font-semibold">Required Ground Coffee</span>
+                        <span id="calc-result-coffee" class="text-3xl font-bold font-mono text-amber-200 mt-1 block">20.0 g</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hand-Drip Technique & Temp Guide -->
+            <div class="glass-card p-6 rounded-2xl border border-amber-900/40 space-y-4">
+                <div class="flex items-center space-x-3 text-amber-400">
+                    <i class="fa-solid fa-temperature-three-quarters text-2xl"></i>
+                    <h3 class="text-xl font-bold font-serif-title text-amber-100">Extraction & Temp Guide</h3>
+                </div>
+
+                <div class="space-y-3 text-xs text-amber-200/80">
+                    <div class="flex justify-between items-center p-2.5 rounded-lg bg-coffee-950/70 border border-amber-900/30">
+                        <span class="font-semibold text-amber-300">Light Roast / Washing (水洗/淺烘)</span>
+                        <span class="font-mono text-amber-400">92°C - 94°C | Fine-Medium</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 rounded-lg bg-coffee-950/70 border border-amber-900/30">
+                        <span class="font-semibold text-amber-300">Natural / Anaerobic (日曬/厭氧)</span>
+                        <span class="font-mono text-amber-400">89°C - 91°C | Medium</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 rounded-lg bg-coffee-950/70 border border-amber-900/30">
+                        <span class="font-semibold text-amber-300">Medium-Dark Roast (中深烘焙)</span>
+                        <span class="font-mono text-amber-400">85°C - 88°C | Medium-Coarse</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="bean-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-lg rounded-3xl overflow-hidden relative border border-amber-500/40 shadow-2xl animate-in fade-in zoom-in duration-200">
+            <button onclick="closeBeanModal()" class="absolute top-4 right-4 z-20 text-amber-200 hover:text-white text-lg w-8 h-8 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center border border-amber-500/30">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="modal-content" class="space-y-0">
+                <!-- Modal dynamic body inserted via JS -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-amber-900/40 bg-coffee-950 py-8 text-center text-xs text-amber-400/60">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-coffee text-amber-500"></i>
+                <span class="font-serif-title font-semibold text-amber-200">Billy's Coffee Bar & Roastery</span>
+            </div>
+            <p>© 2026 Billy's Coffee. All Micro-Lot Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // High Quality Coffee Stock Images with SVG Fallback Generator
+        const SVG_FALLBACK = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'><rect width='100%' height='100%' fill='%231e1008'/><path d='M300 130 C350 130, 390 170, 390 220 C390 270, 350 310, 300 310 C250 310, 210 270, 210 220 C210 170, 250 130, 300 130 Z' fill='%233a2113'/><path d='M300 140 C320 180, 280 260, 300 300' stroke='%23f59e0b' stroke-width='6' fill='none' stroke-linecap='round'/><text x='50% 'y='85%' dominant-baseline='middle' text-anchor='middle' fill='%23f59e0b' font-family='sans-serif' font-size='16'>Billy's SOE Micro-Lot</text></svg>";
+
+        // Inventory Raw Data with Curated Coffee Imagery
+        const ROASTED_BEANS = [
+            { id: 'r1', name: '埃塞俄比亞耶加雪菲孔加 水洗G1', date: '2026-03-31', stock: 101, origin: '埃塞俄比亞', process: '水洗 G1', score: 88, notes: ['Bergamot', 'Jasmine', 'Lemon Tea', 'Floral'], type: 'roasted', image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r2', name: '埃塞俄比亞耶加雪菲果丁丁 G1 水洗', date: '2026-03-30', stock: 120, origin: '埃塞俄比亞', process: '水洗 G1', score: 88.5, notes: ['Citrus Blossom', 'White Peach', 'Honey', 'Lime'], type: 'roasted', image: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r3', name: '埃塞俄比亞 Lem Kaffa 瑰夏', date: '2026-04-08', stock: 165, origin: '埃塞俄比亞', process: '瑰夏 水洗', score: 90.5, notes: ['Jasmine', 'Elderflower', 'Orange Blossom', 'Silky'], type: 'roasted', image: 'https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r4', name: '埃塞俄比亞 瑰夏 日曬', date: '2026-01-03', stock: 143, origin: '埃塞俄比亞', process: '瑰夏 日曬', score: 91, notes: ['Blueberry', 'Ripe Mango', 'Tropical Fruit', 'Winey'], type: 'roasted', image: 'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r5', name: '埃塞俄比亞班奇馬吉瑰夏 水洗', date: '2026-03-26', stock: 113, origin: '埃塞俄比亞', process: '水洗', score: 89, notes: ['Floral', 'Lemon Grass', 'Green Apple', 'Clean'], type: 'roasted', image: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r6', name: '哥倫比亞天堂92 瑰夏 水洗', date: '2026-07-29', stock: 46, origin: '哥倫比亞', process: '天堂92 瑰夏 水洗', score: 92, notes: ['Rose', 'Lychee', 'Strawberry Jam', 'Complex'], type: 'roasted', image: 'https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r7', name: '哥倫比亞惠蘭 水洗', date: '2026-03-30', stock: 52, origin: '哥倫比亞', process: '水洗', score: 86.5, notes: ['Caramel', 'Red Apple', 'Milk Chocolate', 'Balanced'], type: 'roasted', image: 'https://images.unsplash.com/photo-1521302080334-4bebac2763a6?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r8', name: '巴西 莫吉安娜 皇后庄园 黄波旁 NY2 日晒', date: '2026-08-02', stock: 90, origin: '巴西', process: 'NY2 日晒', score: 85.5, notes: ['Roasted Hazelnut', 'Dark Chocolate', 'Sugarcane', 'Full Body'], type: 'roasted', image: 'https://images.unsplash.com/photo-1610632380989-680fe40816c6?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r9', name: '雲南錦慶鐵皮卡 水洗', date: '2026-06-22', stock: 55, origin: '雲南', process: '水洗', score: 86, notes: ['Herbal Tea', 'Brown Sugar', 'Plum', 'Smooth'], type: 'roasted', image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r10', name: '雲南勐馬鎮 卡蒂姆 日曬', date: '2026-05-29', stock: 14, origin: '雲南', process: '日曬', score: 85, notes: ['Dried Fruit', 'Walnut', 'Sweet Spice'], type: 'roasted', image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r11', name: '雲南勐馬鎮 卡蒂姆 日曬 厭氧', date: '2026-07-21', stock: 73, origin: '雲南', process: '日曬 厭氧', score: 87.5, notes: ['Fermented Berry', 'Cacao Nibs', 'Cinnamon'], type: 'roasted', image: 'https://images.unsplash.com/photo-1518832553480-cd0e625ed3e6?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r12', name: '雲南孟连「小草莓」卡蒂姆 日晒', date: '2026-08-03', stock: 70, origin: '雲南', process: '小草莓 日晒', score: 88, notes: ['Wild Strawberry', 'Bubblegum', 'Bright Berry acidity'], type: 'roasted', image: 'https://images.unsplash.com/photo-1507138086030-41fe7a88088c?auto=format&fit=crop&w=600&q=80' },
+            { id: 'r13', name: '印尼黃金曼特靈 水洗', date: '2026-03-31', stock: 235, origin: '印尼', process: '水洗 濕刨', score: 87, notes: ['Cedarwood', 'Dark Cocoa', 'Spices', 'Heavy Body'], type: 'roasted', image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80' }
+        ];
+
+        const GREEN_BEANS = [
+            { id: 'g1', name: '哥倫比亞天堂92 瑰夏 水洗', date: '2026 Q1', stock: 157, origin: '哥倫比亞', process: '生豆 水洗', notes: ['Micro-Lot', 'High Altitude', 'Special Fermentation'], type: 'green', image: 'https://images.unsplash.com/photo-1587734276901-0268a731efc1?auto=format&fit=crop&w=600&q=80' },
+            { id: 'g2', name: '巴西 莫吉安娜 皇后庄园 黄波旁 NY2 日晒', date: '2026 Q1', stock: 178, origin: '巴西', process: '生豆 日晒', notes: ['Yellow Bourbon', 'Classic Estate'], type: 'green', image: 'https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?auto=format&fit=crop&w=600&q=80' },
+            { id: 'g3', name: '雲南孟连「小草莓」卡蒂姆 日晒', date: '2026 Q1', stock: 388, origin: '雲南', process: '生豆 小草莓日晒', notes: ['Experimental Lot', 'Strawberry Yeast'], type: 'green', image: 'https://images.unsplash.com/photo-1524350876685-274059332603?auto=format&fit=crop&w=600&q=80' },
+            { id: 'g4', name: '雲南勐馬鎮 卡蒂姆 日曬', date: '2026 Q1', stock: 198, origin: '雲南', process: '生豆 日曬', notes: ['Natural Process', 'Menglian Farm'], type: 'green', image: 'https://images.unsplash.com/photo-1504630083234-14187a9df0f5?auto=format&fit=crop&w=600&q=80' },
+            { id: 'g5', name: '雲南勐馬鎮 卡蒂姆 日曬 厭氧', date: '2026 Q1', stock: 238, origin: '雲南', process: '生豆 厭氧', notes: ['Anaerobic Ferment', 'Rich Aroma'], type: 'green', image: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=600&q=80' }
+        ];
+
+        let currentTab = 'all';
+        let currentOriginFilter = 'all';
+        let searchQuery = '';
+
+        function renderInventory() {
+            const container = document.getElementById('inventory-grid');
+            container.innerHTML = '';
+
+            let combined = [];
+            if (currentTab === 'all') combined = [...ROASTED_BEANS, ...GREEN_BEANS];
+            else if (currentTab === 'roasted') combined = [...ROASTED_BEANS];
+            else if (currentTab === 'green') combined = [...GREEN_BEANS];
+
+            const filtered = combined.filter(bean => {
+                const matchQuery = bean.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                   bean.origin.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                   bean.process.toLowerCase().includes(searchQuery.toLowerCase());
+                const matchOrigin = currentOriginFilter === 'all' || bean.origin.includes(currentOriginFilter);
+                return matchQuery && matchOrigin;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-amber-400/60">
+                        <i class="fa-solid fa-mug-saucer text-4xl mb-3 block"></i>
+                        <p>No coffee beans match your filter criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(bean => {
+                const isRoasted = bean.type === 'roasted';
+                const isLowStock = bean.stock <= 30;
+
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl flex flex-col justify-between overflow-hidden group border border-amber-900/30';
+
+                card.innerHTML = `
+                    <!-- Card Header Image -->
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="${bean.image}" 
+                             alt="${bean.name}" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                             onerror="this.onerror=null; this.src='${SVG_FALLBACK}';">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-coffee-950 via-coffee-950/40 to-transparent"></div>
+
+                        <!-- Top Badges Overlay -->
+                        <div class="absolute top-3 left-3 right-3 flex justify-between items-center z-10">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase backdrop-blur-md shadow-md ${isRoasted ? 'bg-amber-900/80 text-amber-200 border border-amber-500/40' : 'bg-emerald-950/90 text-emerald-300 border border-emerald-500/40'}">
+                                ${isRoasted ? '熟豆 SOE' : '生豆 GREEN'}
+                            </span>
+                            <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold backdrop-blur-md border shadow-md ${isLowStock ? 'bg-red-950/80 text-red-300 border-red-500/50 animate-pulse' : 'bg-black/60 text-amber-300 border-amber-800/40'}">
+                                ${bean.stock}g ${isLowStock ? '⚠️ Low' : ''}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Body Content -->
+                    <div class="p-5 flex-grow space-y-3">
+                        <div>
+                            <h4 class="text-lg font-bold text-amber-100 group-hover:text-amber-400 transition-colors font-serif-title leading-snug">
+                                ${bean.name}
+                            </h4>
+                            <p class="text-xs text-amber-300/80 mt-1 flex items-center gap-2 font-medium">
+                                <i class="fa-solid fa-location-dot text-amber-500"></i> ${bean.origin} • ${bean.process}
+                            </p>
+                        </div>
+
+                        <!-- Notes Tags -->
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            ${bean.notes.map(n => `<span class="bg-coffee-950 px-2.5 py-1 rounded-lg text-[11px] text-amber-300/90 border border-amber-900/40 font-medium">${n}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Card Footer Info -->
+                    <div class="px-5 py-3.5 bg-coffee-950/80 border-t border-amber-900/30 flex items-center justify-between text-xs">
+                        <span class="text-amber-400/70 font-mono">
+                            ${isRoasted ? 'Roast:' : 'Batch:'} <strong class="text-amber-200">${bean.date}</strong>
+                        </span>
+
+                        <div class="flex items-center gap-2">
+                            <button onclick="openBeanModal('${bean.id}')" class="px-3 py-1.5 rounded-lg bg-amber-950 hover:bg-amber-900 text-amber-300 border border-amber-800/50 transition">
+                                Details
+                            </button>
+                            ${isRoasted ? `
+                                <button onclick="selectBeanForBrew('${bean.name}')" class="px-3.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-medium transition flex items-center gap-1 shadow-md">
+                                    <i class="fa-solid fa-droplet text-[10px]"></i> Brew
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function switchInventoryTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('[id^="tab-"]').forEach(btn => {
+                btn.className = 'px-3 py-1.5 rounded-lg text-amber-300 hover:text-amber-100 transition';
+            });
+            document.getElementById('tab-' + tab).className = 'px-3 py-1.5 rounded-lg bg-amber-600 text-white font-semibold transition';
+            renderInventory();
+        }
+
+        function filterInventory() {
+            searchQuery = document.getElementById('inventory-search').value;
+            renderInventory();
+        }
+
+        function filterOrigin(origin) {
+            currentOriginFilter = origin;
+            document.querySelectorAll('.origin-btn').forEach(btn => {
+                btn.className = 'origin-btn px-3 py-1 rounded-full border border-amber-900/40 bg-coffee-950/60 text-amber-400 hover:bg-amber-900 transition text-xs';
+            });
+            event.target.className = 'origin-btn active px-3 py-1 rounded-full border border-amber-700/50 bg-amber-950 text-amber-300 hover:bg-amber-900 transition text-xs font-bold';
+            renderInventory();
+        }
+
+        function openBeanModal(id) {
+            const bean = [...ROASTED_BEANS, ...GREEN_BEANS].find(b => b.id === id);
+            if (!bean) return;
+
+            const modal = document.getElementById('bean-modal');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+                <!-- Modal Top Hero Image -->
+                <div class="relative h-56 overflow-hidden">
+                    <img src="${bean.image}" 
+                         alt="${bean.name}" 
+                         class="w-full h-full object-cover"
+                         onerror="this.onerror=null; this.src='${SVG_FALLBACK}';">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#1e1008] via-[#1e1008]/50 to-transparent"></div>
+
+                    <div class="absolute bottom-4 left-6 right-6">
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase ${bean.type === 'roasted' ? 'bg-amber-900/80 text-amber-200' : 'bg-emerald-950 text-emerald-300'} border border-amber-500/30">
+                            ${bean.type === 'roasted' ? '熟豆 SOE' : '生豆 SOE'}
+                        </span>
+                        <h3 class="text-2xl font-bold font-serif-title text-amber-100 mt-2 leading-snug">${bean.name}</h3>
+                    </div>
+                </div>
+
+                <div class="p-6 space-y-5">
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="bg-coffee-950 p-3 rounded-xl border border-amber-900/40">
+                            <span class="text-amber-400/70 block">Origin Region</span>
+                            <span class="font-semibold text-amber-200 text-sm">${bean.origin}</span>
+                        </div>
+                        <div class="bg-coffee-950 p-3 rounded-xl border border-amber-900/40">
+                            <span class="text-amber-400/70 block">Process Method</span>
+                            <span class="font-semibold text-amber-200 text-sm">${bean.process}</span>
+                        </div>
+                        <div class="bg-coffee-950 p-3 rounded-xl border border-amber-900/40">
+                            <span class="text-amber-400/70 block">Current Stock</span>
+                            <span class="font-semibold text-amber-200 text-sm font-mono">${bean.stock} g</span>
+                        </div>
+                        <div class="bg-coffee-950 p-3 rounded-xl border border-amber-900/40">
+                            <span class="text-amber-400/70 block">${bean.type === 'roasted' ? 'Roast Date' : 'Lot Quarter'}</span>
+                            <span class="font-semibold text-amber-200 text-sm font-mono">${bean.date}</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h5 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">Flavor Profile Descriptors</h5>
+                        <div class="flex flex-wrap gap-2">
+                            ${bean.notes.map(n => `<span class="bg-amber-950 text-amber-300 border border-amber-700/40 px-3 py-1 rounded-lg text-xs font-medium">${n}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    ${bean.type === 'roasted' ? `
+                        <div class="pt-3 border-t border-amber-900/40">
+                            <button onclick="selectBeanForBrew('${bean.name}'); closeBeanModal();" class="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-droplet"></i> Select For Hand-Drip Timer
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeBeanModal() {
+            document.getElementById('bean-modal').classList.add('hidden');
+        }
+
+        function selectBeanForBrew(beanName) {
+            document.getElementById('current-bean-name').innerText = beanName;
+            scrollToTimer();
+        }
+
+        function scrollToTimer() {
+            document.getElementById('timer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        let audioCtx = null;
+        let isJazzPlaying = false;
+        let jazzGainNode = null;
+        let crackleNode = null;
+        let jazzLoopTimer = null;
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                jazzGainNode = audioCtx.createGain();
+                jazzGainNode.gain.value = 0.4;
+                jazzGainNode.connect(audioCtx.destination);
+            }
+        }
+
+        function toggleJazzPlayer() {
+            initAudioContext();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            if (isJazzPlaying) {
+                stopJazz();
+            } else {
+                startJazz();
+            }
+        }
+
+        function startJazz() {
+            isJazzPlaying = true;
+            document.getElementById('jazz-status-badge').innerText = 'Playing Jazz';
+            document.getElementById('jazz-status-badge').className = 'px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-950 text-emerald-400 border border-emerald-700';
+            document.getElementById('jazz-play-icon').className = 'fa-solid fa-pause';
+            document.getElementById('jazz-play-text').innerText = 'Pause Slow Jazz';
+            document.getElementById('vinyl-disc').classList.remove('animate-vinyl-paused');
+
+            startVinylCrackle();
+            playJazzChordProgression();
+        }
+
+        function stopJazz() {
+            isJazzPlaying = false;
+            document.getElementById('jazz-status-badge').innerText = 'Paused';
+            document.getElementById('jazz-status-badge').className = 'px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-950 text-amber-400 border border-amber-800';
+            document.getElementById('jazz-play-icon').className = 'fa-solid fa-play';
+            document.getElementById('jazz-play-text').innerText = 'Play Coffee House Jazz';
+            document.getElementById('vinyl-disc').classList.add('animate-vinyl-paused');
+
+            if (jazzLoopTimer) clearTimeout(jazzLoopTimer);
+            if (crackleNode) {
+                try { crackleNode.stop(); } catch(e){}
+            }
+        }
+
+        function updateJazzVolume(val) {
+            if (jazzGainNode) {
+                jazzGainNode.gain.value = parseFloat(val);
+            }
+        }
+
+        // Procedural Jazz Chord Synth
+        const JAZZ_CHORDS = [
+            [220.00, 261.63, 329.63, 392.00, 493.88], // Am9
+            [146.83, 174.61, 220.00, 261.63, 329.63], // Dm9
+            [196.00, 246.94, 293.66, 349.23, 440.00], // G13
+            [130.81, 164.81, 196.00, 246.94, 293.66]  // Cmaj9
+        ];
+        let chordIndex = 0;
+
+        function playJazzChordProgression() {
+            if (!isJazzPlaying) return;
+
+            const chord = JAZZ_CHORDS[chordIndex];
+            chordIndex = (chordIndex + 1) % JAZZ_CHORDS.length;
+
+            chord.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 650;
+
+                const attack = 0.8 + (i * 0.1);
+                const release = 3.5;
+
+                gain.gain.setValueAtTime(0, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + attack);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + attack + release);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(jazzGainNode);
+
+                osc.start(audioCtx.currentTime + (i * 0.08));
+                osc.stop(audioCtx.currentTime + attack + release + 0.2);
+            });
+
+            jazzLoopTimer = setTimeout(playJazzChordProgression, 4200);
+        }
+
+        // Vinyl Crackle Noise Generator
+        function startVinylCrackle() {
+            if (!document.getElementById('check-vinyl-crackle').checked) return;
+            const bufferSize = audioCtx.sampleRate * 2;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = (Math.random() < 0.0015) ? (Math.random() * 2 - 1) * 0.3 : (Math.random() * 2 - 1) * 0.01;
+            }
+
+            crackleNode = audioCtx.createBufferSource();
+            crackleNode.buffer = buffer;
+            crackleNode.loop = true;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 1200;
+
+            const gain = audioCtx.createGain();
+            gain.gain.value = 0.15;
+
+            crackleNode.connect(filter);
+            filter.connect(gain);
+            gain.connect(jazzGainNode);
+            crackleNode.start();
+        }
+
+        function toggleCrackle(enabled) {
+            if (!isJazzPlaying) return;
+            if (crackleNode) {
+                try { crackleNode.stop(); } catch(e){}
+            }
+            if (enabled) startVinylCrackle();
+        }
+
+        let tasteBias = 'balance'; 
+        let strengthBias = 'medium'; 
+        let totalWater = 225;
+        let pourSchedule = [];
+
+        function setTasteBias(bias) {
+            tasteBias = bias;
+            document.querySelectorAll('.bias-btn').forEach(b => b.className = 'bias-btn py-2 text-xs rounded-xl border border-amber-800 bg-amber-950 text-amber-300 hover:border-amber-500 font-medium transition');
+            document.getElementById('btn-bias-' + bias).className = 'bias-btn active py-2 text-xs rounded-xl border border-amber-500 bg-amber-600 text-white font-semibold transition';
+            updateBrewCalculation();
+        }
+
+        function setStrengthBias(bias) {
+            strengthBias = bias;
+            document.querySelectorAll('.strength-btn').forEach(b => b.className = 'strength-btn py-2 text-xs rounded-xl border border-amber-800 bg-amber-950 text-amber-300 hover:border-amber-500 font-medium transition');
+            document.getElementById('btn-strength-' + bias).className = 'strength-btn active py-2 text-xs rounded-xl border border-amber-500 bg-amber-600 text-white font-semibold transition';
+            updateBrewCalculation();
+        }
+
+        function updateBrewCalculation() {
+            const dose = parseFloat(document.getElementById('input-dose').value);
+            const ratio = parseFloat(document.getElementById('input-ratio').value);
+            
+            document.getElementById('val-dose').innerText = dose + ' g';
+            document.getElementById('val-ratio').innerText = '1 : ' + ratio;
+
+            totalWater = Math.round(dose * ratio);
+            document.getElementById('summary-total-water').innerText = totalWater + ' g';
+
+            const first40 = totalWater * 0.4;
+            const remaining60 = totalWater * 0.6;
+
+            let pour1 = Math.round(first40 * 0.5);
+            let pour2 = Math.round(first40 * 0.5);
+
+            if (tasteBias === 'sweet') {
+                pour1 = Math.round(first40 * 0.4);
+                pour2 = Math.round(first40 * 0.6);
+            } else if (tasteBias === 'bright') {
+                pour1 = Math.round(first40 * 0.6);
+                pour2 = Math.round(first40 * 0.4);
+            }
+
+            let secondPours = [];
+            if (strengthBias === 'light') {
+                secondPours = [remaining60 * 0.5, remaining60 * 0.5];
+            } else if (strengthBias === 'medium') {
+                secondPours = [remaining60 / 3, remaining60 / 3, remaining60 / 3];
+            } else {
+                secondPours = [remaining60 / 4, remaining60 / 4, remaining60 / 4, remaining60 / 4];
+            }
+
+            pourSchedule = [
+                { stage: 1, time: 0, pourVol: pour1, targetCum: pour1, note: 'Bloom & Sweetness Phase' },
+                { stage: 2, time: 45, pourVol: pour2, targetCum: pour1 + pour2, note: 'Acidity Balance Phase' }
+            ];
+
+            let runningTarget = pour1 + pour2;
+            let currentTime = 90;
+
+            secondPours.forEach((p, idx) => {
+                runningTarget += Math.round(p);
+                pourSchedule.push({
+                    stage: idx + 3,
+                    time: currentTime,
+                    pourVol: Math.round(p),
+                    targetCum: Math.min(totalWater, runningTarget),
+                    note: 'Strength Phase ' + (idx + 1)
+                });
+                currentTime += 45;
+            });
+
+            renderPourTimeline();
+            if (!timerInterval) {
+                document.getElementById('timer-target-weight').innerText = pourSchedule[0].targetCum + ' g';
+            }
+        }
+
+        function renderPourTimeline() {
+            const timeline = document.getElementById('pour-schedule-timeline');
+            timeline.innerHTML = '';
+
+            pourSchedule.forEach((step, i) => {
+                const el = document.createElement('div');
+                el.id = 'pour-step-' + i;
+                el.className = 'glass-card p-3 rounded-xl flex items-center justify-between text-xs transition-all';
+                el.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <span class="w-6 h-6 rounded-full bg-amber-950 border border-amber-700/50 flex items-center justify-center font-bold text-amber-400 font-mono text-[11px]">
+                            ${i + 1}
+                        </span>
+                        <div>
+                            <span class="font-bold text-amber-100 block">Pour ${i + 1}: +${step.pourVol}g water</span>
+                            <span class="text-amber-400/70 text-[11px]">${step.note}</span>
+                        </div>
+                    </div>
+                    <div class="text-right font-mono">
+                        <span class="text-amber-300 font-bold block">${step.targetCum} g total</span>
+                        <span class="text-amber-500/80 text-[11px]">${formatTime(step.time)}</span>
+                    </div>
+                `;
+                timeline.appendChild(el);
+            });
+        }
+
+        let timerSeconds = 0;
+        let timerInterval = null;
+
+        function toggleTimer() {
+            if (timerInterval) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        }
+
+        function startTimer() {
+            initAudioContext();
+            timerInterval = setInterval(() => {
+                timerSeconds++;
+                updateTimerDisplay();
+            }, 1000);
+
+            document.getElementById('btn-timer-start').className = 'flex-1 py-3.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-bold text-base shadow-lg transition flex items-center justify-center gap-2';
+            document.getElementById('timer-play-icon').className = 'fa-solid fa-pause';
+            document.getElementById('timer-play-text').innerText = 'Pause Timer';
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            document.getElementById('btn-timer-start').className = 'flex-1 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-coffee-950 font-bold text-base shadow-lg transition flex items-center justify-center gap-2';
+            document.getElementById('timer-play-icon').className = 'fa-solid fa-play';
+            document.getElementById('timer-play-text').innerText = 'Resume Timer';
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerSeconds = 0;
+            updateTimerDisplay();
+            document.querySelectorAll('[id^="pour-step-"]').forEach(el => el.classList.remove('brewing-active'));
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById('timer-display').innerText = formatTime(timerSeconds);
+
+            const maxSeconds = (pourSchedule.length * 45) + 30;
+            const progressRatio = Math.min(1, timerSeconds / maxSeconds);
+            const dashoffset = 276.46 * (1 - progressRatio);
+            document.getElementById('timer-progress-ring').style.strokeDashoffset = dashoffset;
+
+            let currentStepIdx = 0;
+            for (let i = 0; i < pourSchedule.length; i++) {
+                if (timerSeconds >= pourSchedule[i].time) {
+                    currentStepIdx = i;
+                }
+            }
+
+            pourSchedule.forEach((step, i) => {
+                const el = document.getElementById('pour-step-' + i);
+                if (el) {
+                    if (i === currentStepIdx) {
+                        el.classList.add('brewing-active');
+                    } else {
+                        el.classList.remove('brewing-active');
+                    }
+                }
+            });
+
+            const activePour = pourSchedule[currentStepIdx];
+            if (activePour) {
+                document.getElementById('timer-stage-label').innerText = 'Pour Stage ' + (currentStepIdx + 1) + ' / ' + pourSchedule.length;
+                document.getElementById('timer-target-weight').innerText = activePour.targetCum + ' g';
+
+                if (pourSchedule.some(p => p.time === timerSeconds)) {
+                    playChimeSound();
+                }
+            }
+        }
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60).toString().padStart(2, '0');
+            const s = (sec % 60).toString().padStart(2, '0');
+            return m + ':' + s;
+        }
+
+        function playChimeSound() {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.6);
+        }
+
+        function calculateCustomRatio(changed) {
+            const waterEl = document.getElementById('calc-water');
+            const ratioEl = document.getElementById('calc-ratio');
+            const resultEl = document.getElementById('calc-result-coffee');
+
+            const water = parseFloat(waterEl.value) || 0;
+            const ratio = parseFloat(ratioEl.value) || 1;
+
+            if (ratio > 0) {
+                const coffee = (water / ratio).toFixed(1);
+                resultEl.innerText = coffee + ' g';
+            }
+        }
+
+        window.onload = function() {
+            renderInventory();
+            updateBrewCalculation();
+        };
+    </script>
+</body>
+</html>

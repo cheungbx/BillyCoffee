@@ -143,7 +143,7 @@
         </h2>
 
         <p class="mt-6 text-base sm:text-lg text-coffee-300 max-w-2xl font-light leading-relaxed">
-            嚴選世界頂級莊園微批次精品咖啡豆。從生豆嚴格篩選、精準淺中焙，到 4:6 黃金手沖曲線，為您呈獻乾淨、透亮、層次分明的風土記憶。
+            嚴選世界頂級莊園微批次精品咖啡豆。從生豆嚴格篩選、精準淺中焙，到專業黃金手沖曲線，為您呈獻乾淨、透亮、層次分明的風土記憶。
         </p>
 
         <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -190,14 +190,19 @@
 
     <!-- Green Beans Section -->
     <section id="green" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div class="mb-10 border-b border-coffee-800 pb-6 flex items-center justify-between">
+        <div class="mb-10 border-b border-coffee-800 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
                 <span class="text-emerald-400 text-xs font-mono uppercase tracking-widest block mb-1">Raw Green Coffee Inventory</span>
                 <h3 class="font-serif text-2xl sm:text-3xl font-bold text-coffee-50">生豆專區 (Green Beans)</h3>
             </div>
-            <span class="bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 text-xs font-mono px-3 py-1 rounded-full">
-                <i class="fa-solid fa-wind mr-1.5"></i> 附家用浮風逆風式烘焙建議
-            </span>
+            <div class="flex items-center gap-3">
+                <button onclick="openGlobalRoastGuide()" class="bg-coffee-900 hover:bg-coffee-800 text-amberGlow border border-amberGlow/40 text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> 閱讀浮風烘焙完整指南
+                </button>
+                <span class="bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 text-xs font-mono px-3 py-2 rounded-xl">
+                    <i class="fa-solid fa-wind mr-1.5"></i> 附家用浮風式烘焙建議
+                </span>
+            </div>
         </div>
 
         <div id="greenBeansGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -205,16 +210,16 @@
         </div>
     </section>
 
-    <!-- Interactive Pour-Over Calculator & 4:6 Timer Section -->
+    <!-- Interactive Pour-Over Calculator & Timer Section -->
     <section id="calculator" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-amberGlow/30 relative overflow-hidden shadow-2xl">
             <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
             <div class="max-w-3xl mx-auto text-center mb-10">
                 <span class="text-amberGlow text-xs font-mono uppercase tracking-widest block mb-2">Brew Master Assistant</span>
-                <h3 class="font-serif text-2xl sm:text-4xl font-bold text-coffee-50">黃金 4:6 手沖計時與水量計算器</h3>
+                <h3 class="font-serif text-2xl sm:text-4xl font-bold text-coffee-50">專業手沖計時與注水法計算器</h3>
                 <p class="text-xs sm:text-sm text-coffee-300 mt-2 font-light">
-                    依據 Tetsu Kasuya 經典 4:6 萃取法，精準掌握前段酸甜平衡與後段濃度調整，讓您在家也能完美沖煮每一杯 SOE。
+                    現已支援四大經典手沖手法：Tetsu Kasuya 4:6 法、日本職人三刀流、河野式點滴悶蒸法與 1:1 黃金冰釀激流法，助您精準掌握每杯風味。
                 </p>
             </div>
 
@@ -226,6 +231,20 @@
                     </h4>
 
                     <div>
+                        <label class="block text-xs text-coffee-300 mb-1.5 font-medium">沖煮手法選擇</label>
+                        <select id="brewMethod" onchange="updateCalculator()" class="w-full bg-coffee-950 border border-coffee-700 rounded-xl px-4 py-2.5 text-coffee-100 text-xs font-medium focus:outline-none focus:border-amberGlow">
+                            <option value="46">1. Tetsu Kasuya 4:6 手沖法</option>
+                            <option value="threeKnife">2. 日本職人「三刀流」注水法</option>
+                            <option value="konoDrop">3. 河野式「點滴悶蒸」極濃法</option>
+                            <option value="iciclesFlow">4. 1:1 黃金「冰釀激流」法</option>
+                            <option value="v60Classic">5. Hario V60 經典三段式注水法 </option>
+                            <option value="chemex">6. Chemex 緩速厚濾紙潔淨法 </option>
+                            <option value="frenchPress">7. 法壓壺 (French Press) 浸泡萃取法 </option>
+                            <option value="aeropress">8. 愛樂壓 (AeroPress) 倒沖浸泡壓濾法 </option>
+                        </select>
+                    </div>
+
+                    <div>
                         <label class="block text-xs text-coffee-300 mb-1.5 font-medium">咖啡豆克數 (g)</label>
                         <input type="number" id="coffeeGrams" value="20" min="10" max="50" oninput="updateCalculator()" class="w-full bg-coffee-950 border border-coffee-700 rounded-xl px-4 py-2.5 text-coffee-100 font-mono text-sm focus:outline-none focus:border-amberGlow">
                     </div>
@@ -235,7 +254,7 @@
                         <input type="range" id="ratioSlider" min="13" max="18" value="15" step="0.5" oninput="updateCalculator()" class="w-full accent-amberGlow cursor-pointer">
                     </div>
 
-                    <div>
+                    <div id="tastePreferenceContainer">
                         <label class="block text-xs text-coffee-300 mb-1.5 font-medium">口感偏好 (前 40% 水量調控)</label>
                         <select id="tastePreference" onchange="updateCalculator()" class="w-full bg-coffee-950 border border-coffee-700 rounded-xl px-4 py-2.5 text-coffee-100 text-xs font-medium focus:outline-none focus:border-amberGlow">
                             <option value="balanced">均衡標準 (兩段均分: 40g + 40g)</option>
@@ -273,7 +292,7 @@
 
                     <!-- Step breakdown list -->
                     <div class="space-y-3">
-                        <h5 class="text-xs font-mono uppercase tracking-wider text-coffee-400">4:6 階段注水指南</h5>
+                        <h5 id="stepsHeaderTitle" class="text-xs font-mono uppercase tracking-wider text-coffee-400">分段注水指引與秒數</h5>
                         <div id="pourStepsList" class="space-y-2.5 max-h-56 overflow-y-auto pr-1">
                             <!-- Populated via JS -->
                         </div>
@@ -298,8 +317,8 @@
                         <div class="text-[11px] text-coffee-400 mt-1">精品微批次豆</div>
                     </div>
                     <div>
-                        <div class="font-serif text-xl font-bold text-amberGlow">精準</div>
-                        <div class="text-[11px] text-coffee-400 mt-1">4:6 手沖導引</div>
+                        <div class="font-serif text-xl font-bold text-amberGlow">四大手法</div>
+                        <div class="text-[11px] text-coffee-400 mt-1">專業手沖計時引導</div>
                     </div>
                     <div>
                         <div class="font-serif text-xl font-bold text-amberGlow">新鮮</div>
@@ -334,16 +353,16 @@
             </div>
 
             <div class="text-xs text-coffee-300 space-y-1">
-                <p><i class="fa-solid fa-location-dot text-amberGlow mr-1.5"></i> 職人精品咖啡豆專門店 &bull; 支援現場預留與手沖指導</p>
-                <p class="text-[11px] text-coffee-400">嚴選 13 款手沖 SOE 熟豆與 5 款頂級生豆庫存</p>
+                <p><i class="fa-solid fa-location-dot text-amberGlow mr-1.5"></i> 職人精品咖啡豆專門店 &bull; 支援現場預留與四大手沖法教學</p>
+                <p class="text-[11px] text-coffee-400">嚴選 13 款手沖 SOE 熟豆與 5 款頂級生豆庫存（附專屬浮風烘焙指南）</p>
             </div>
         </div>
     </footer>
 
     <!-- Bean Detail Modal -->
     <div id="beanModal" class="fixed inset-0 z-50 flex items-center justify-center bg-coffee-950/80 backdrop-blur-md opacity-0 pointer-events-none transition duration-300 px-4">
-        <div id="modalContainer" class="glass-panel w-full max-w-lg rounded-3xl p-6 sm:p-8 border border-amberGlow/40 relative transform scale-95 transition duration-300 shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-coffee-900 border border-coffee-700 text-coffee-300 hover:text-amberGlow flex items-center justify-center transition">
+        <div id="modalContainer" class="glass-panel w-full max-w-lg rounded-3xl p-6 sm:p-8 border border-amberGlow/40 relative transform scale-95 transition duration-300 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-coffee-900 border border-coffee-700 text-coffee-300 hover:text-amberGlow flex items-center justify-center transition z-10">
                 <i class="fa-solid fa-xmark text-sm"></i>
             </button>
             <div id="modalContent">
@@ -567,9 +586,12 @@
                 stockGrams: 157,
                 notes: ['鮮綠生豆', '精品瑰夏微批次', '極高密度'],
                 roastGuide: {
-                    machine: '家用浮風逆風式烘焙機 (Fluid-Bed / Air Roaster)',
-                    batchSize: '建議投入量：100g - 120g（確保熱風流動均勻、翻滾順暢）',
-                    profile: '瑰夏高密度豆需要溫和起步。建議先以 180°C 預熱，入豆後風速調至 7 成、火力中高 (85%) 迅速帶過脫水期 (約 4 分鐘達 150°C)；進入梅納反應期後適當降風溫以保留細緻花香。在一爆密集點 (約 9 分 30 秒，豆溫約 196°C) 後 45 秒下豆，保持明亮柑橘橙花風味。'
+                    machine: '家用浮風熱風式烘焙機 (Fluid-Bed / Air Roaster)',
+                    batchSize: '建議投豆量：100g - 120g（最佳區間，過多會導致熱風無法順暢穿透）',
+                    entryTemp: '180°C',
+                    dehydration: '脫水期 (0-4分)：中火力 (80%)，風速開高，使豆溫在 4 分鐘左右達到 150°C 黃變點。',
+                    firstCrack: '一爆階段：進入一爆密集點 (約 9 分 30 秒，豆溫約 196°C) 後維持 45 秒即刻下豆。',
+                    targetFlavor: '保留奔放的橙花、水蜜桃與高雅的柑橘酸質。'
                 }
             },
             {
@@ -581,9 +603,12 @@
                 stockGrams: 178,
                 notes: ['高溫品質篩選', '甜潤波旁', '手烘首選'],
                 roastGuide: {
-                    machine: '家用浮風逆風式烘焙機 (Fluid-Bed / Air Roaster)',
-                    batchSize: '建議投入量：120g - 150g',
-                    profile: '黃波旁含糖量高、油脂豐富。建議入豆溫 190°C，利用氣流強勁特性使豆子快速翻滾。脫水期維持中火力 (75%)，梅納反應期拉長，在一爆剛結束至一爆密集尾聲 (豆溫 201°C - 203°C) 之間下豆，可引出濃郁奶油太妃糖與烤堅果香。'
+                    machine: '家用浮風熱風式烘焙機 (Fluid-Bed / Air Roaster)',
+                    batchSize: '建議投豆量：120g - 150g',
+                    entryTemp: '190°C（黃波旁耐受度較好，可適度提高初始溫度）',
+                    dehydration: '脫水期：利用強勁熱風讓豆子快速翻滾，梅納反應期適度拉長。',
+                    firstCrack: '一爆階段：一爆結束後延伸 30 秒（豆溫約 201°C - 203°C）下豆。',
+                    targetFlavor: '展現濃郁的奶油太妃糖、烤堅果與低酸滑順口感。'
                 }
             },
             {
@@ -595,9 +620,12 @@
                 stockGrams: 388,
                 notes: ['強烈草莓發酵香', '特別精選豆', '極稀有'],
                 roastGuide: {
-                    machine: '家用浮風逆風式烘焙機 (Fluid-Bed / Air Roaster)',
-                    batchSize: '建議投入量：100g',
-                    profile: '日曬與特殊發酵豆糖分焦糖化快、容易外焦內生。流風式烘焙機熱風對流強，適合以低溫入豆 (175°C)，初期風速拉高防止局部過熱。在一爆前溫和爬坡，一爆響起時調降熱風並在 200°C 左右果斷下豆，保留草莓果醬與乳酸氣息。'
+                    machine: '家用浮風熱風式烘焙機 (Fluid-Bed / Air Roaster)',
+                    batchSize: '建議投豆量：100g（特殊發酵豆建議少量烘焙，確保熱風均勻）',
+                    entryTemp: '175°C（採用較低溫入豆，保護嬌貴的發酵香氣）',
+                    dehydration: '脫水期：稍微調高風速，火力維持中等，防止外層因殘糖過高而過早焦化。',
+                    firstCrack: '一爆階段：一爆響起時立即調降火力，並在 200°C 左右果斷下豆。',
+                    targetFlavor: '鎖住草莓果醬、粉紅葡萄柚與乳酸發酵氣息。'
                 }
             },
             {
@@ -609,9 +637,12 @@
                 stockGrams: 198,
                 notes: ['高海拔莊園', '日曬熟果韻', '飽滿均勻'],
                 roastGuide: {
-                    machine: '家用浮風逆風式烘焙機 (Fluid-Bed / Air Roaster)',
-                    batchSize: '建議投入量：120g',
-                    profile: '建議預熱 185°C。卡蒂姆品種扎實，逆風式熱流可提供極佳傳熱效率。脫水時間抓 4 分 30 秒，進入一爆前適度降火力，在一爆結束後 30 秒下豆 (約 202°C)，展現沉穩普洱茶韻與黑糖甜感。'
+                    machine: '家用浮風熱風式烘焙機 (Fluid-Bed / Air Roaster)',
+                    batchSize: '建議投豆量：120g',
+                    entryTemp: '185°C',
+                    dehydration: '脫水期：維持適中火力與風速，穩定爬升。',
+                    firstCrack: '一爆階段：一爆密集點後 30-45 秒下豆（約 202°C）。',
+                    targetFlavor: '沉穩普洱茶韻、黑糖甜感與濃郁堅果。'
                 }
             },
             {
@@ -623,9 +654,12 @@
                 stockGrams: 238,
                 notes: ['控溫厭氧罐發酵', '朗姆酒甜感', '極致高分'],
                 roastGuide: {
-                    machine: '家用浮風逆風式烘焙機 (Fluid-Bed / Air Roaster)',
-                    batchSize: '建議投入量：100g',
-                    profile: '厭氧發酵豆香氣揮發快，切忌過度烘焙。建議 175°C 入豆，利用流風式均勻加熱優勢，以穩定中小火緩步推進。在一爆開始時密切注意風溫，一爆中段 (約 198°C) 即刻下豆，完美鎖住迷人朗姆酒香與酒釀櫻桃風味。'
+                    machine: '家用浮風熱風式烘焙機 (Fluid-Bed / Air Roaster)',
+                    batchSize: '建議投豆量：100g',
+                    entryTemp: '175°C',
+                    dehydration: '脫水期：溫和導熱，避免高溫碳化發酵香氣。',
+                    firstCrack: '一爆階段：一爆中段（約 198°C）即刻下豆。',
+                    targetFlavor: '迷人朗姆酒香、酒釀櫻桃與可可風味。'
                 }
             }
         ];
@@ -719,7 +753,7 @@
                         </div>
                         
                         <div class="flex items-center gap-2">
-                            <button onclick="openBeanModal('${bean.id}')" class="p-2 rounded-lg bg-coffee-800 hover:bg-coffee-700 text-coffee-200 text-xs transition" title="查看詳細">
+                            <button onclick="openBeanModal('${bean.id}', 'roasted')" class="p-2 rounded-lg bg-coffee-800 hover:bg-coffee-700 text-coffee-200 text-xs transition" title="查看詳細">
                                 <i class="fa-solid fa-circle-info"></i>
                             </button>
                             <button onclick="addToReservation('${bean.id}', 'roasted')" class="px-3 py-1.5 rounded-lg bg-amberGlow/90 hover:bg-amberGlow text-coffee-950 text-xs font-bold transition shadow flex items-center gap-1">
@@ -757,12 +791,18 @@
                             ${bean.notes.map(n => `<span class="bg-coffee-950 text-emerald-300/80 text-[10px] px-2 py-0.5 rounded border border-emerald-950">${n}</span>`).join('')}
                         </div>
 
-                        <div class="bg-coffee-950/80 p-3 rounded-xl border border-emerald-900/50 space-y-1.5 mt-2">
-                            <div class="text-[11px] font-bold text-emerald-400 flex items-center gap-1">
-                                <i class="fa-solid fa-wind"></i> ${bean.roastGuide.machine}
+                        <div class="bg-coffee-950/80 p-3.5 rounded-xl border border-emerald-900/50 space-y-2 mt-2">
+                            <div class="text-[11px] font-bold text-emerald-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-wind"></i> 浮風熱風式烘焙機專用參數
                             </div>
-                            <div class="text-[10px] text-coffee-300 font-mono">${bean.roastGuide.batchSize}</div>
-                            <p class="text-[10px] text-coffee-300 leading-relaxed font-light">${bean.roastGuide.profile}</p>
+                            <div class="text-[11px] text-coffee-200 font-mono font-semibold bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-900/40">
+                                <i class="fa-solid fa-scale-balanced mr-1 text-emerald-400"></i> ${bean.roastGuide.batchSize}
+                            </div>
+                            <div class="text-[10px] text-coffee-300 space-y-1 pt-1">
+                                <div><strong class="text-amberGlow">入豆溫：</strong>${bean.roastGuide.entryTemp}</div>
+                                <div><strong class="text-amberGlow">脫水期：</strong>${bean.roastGuide.dehydration}</div>
+                                <div><strong class="text-amberGlow">一爆期：</strong>${bean.roastGuide.firstCrack}</div>
+                            </div>
                         </div>
                     </div>
 
@@ -771,9 +811,14 @@
                             <span class="text-coffee-400">生豆庫存:</span>
                             <span class="font-mono text-emerald-400 font-bold ml-1">${bean.stockGrams}g</span>
                         </div>
-                        <button onclick="addToReservation('${bean.id}', 'green')" class="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-semibold transition shadow flex items-center gap-1">
-                            <i class="fa-solid fa-plus text-[10px]"></i> 預留生豆
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openBeanModal('${bean.id}', 'green')" class="p-2 rounded-lg bg-coffee-800 hover:bg-coffee-700 text-coffee-200 text-xs transition" title="完整烘焙指南">
+                                <i class="fa-solid fa-book-open"></i>
+                            </button>
+                            <button onclick="addToReservation('${bean.id}', 'green')" class="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-semibold transition shadow flex items-center gap-1">
+                                <i class="fa-solid fa-plus text-[10px]"></i> 預留生豆
+                            </button>
+                        </div>
                     </div>
                 `;
                 container.appendChild(card);
@@ -799,49 +844,141 @@
         }
 
         // Modal Controls
-        function openBeanModal(beanId) {
-            const bean = roastedBeans.find(b => b.id === beanId);
+        function openBeanModal(beanId, type) {
+            const list = type === 'roasted' ? roastedBeans : greenBeans;
+            const bean = list.find(b => b.id === beanId);
             if (!bean) return;
 
             const modalContent = document.getElementById('modalContent');
+            
+            if (type === 'roasted') {
+                modalContent.innerHTML = `
+                    <div class="space-y-5">
+                        <div class="relative h-48 rounded-xl overflow-hidden border border-coffee-700">
+                            <img src="${bean.image}" class="w-full h-full object-cover" onerror="handleImageError(this)">
+                            <div class="absolute inset-0 bg-gradient-to-t from-coffee-950 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 flex items-center gap-2">
+                                <span class="bg-amberGlow text-coffee-950 text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1">
+                                    <i class="${getProcessIconSymbol(bean.process)}"></i> ${bean.region} SOE
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h3 class="font-serif text-xl font-bold text-coffee-50">${bean.name}</h3>
+                            <p class="text-xs text-amberGlow font-mono">烘焙日期: ${bean.roastDate} &bull; 處理法: ${getProcessDisplayName(bean.process)}</p>
+                            <p class="text-xs text-coffee-200"><i class="fa-solid fa-temperature-three-quarters text-amberGlow mr-1"></i> 建議沖煮水溫：<strong>${bean.temp}</strong></p>
+                        </div>
+
+                        <p class="text-xs text-coffee-200 leading-relaxed bg-coffee-950/60 p-3.5 rounded-xl border border-coffee-800">
+                            ${bean.description}
+                        </p>
+
+                        <div>
+                            <span class="text-xs text-coffee-400 block mb-2 font-medium">主要風味標籤：</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                ${bean.notes.map(n => `<span class="bg-coffee-800 text-amberGlow text-xs px-2.5 py-1 rounded-lg border border-coffee-700">${n}</span>`).join('')}
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-coffee-800 flex items-center justify-between">
+                            <span class="text-xs text-coffee-300">現貨剩餘: <strong class="text-amberGlow font-mono">${bean.stockGrams}g</strong></span>
+                            <button onclick="addToReservation('${bean.id}', 'roasted'); closeModal();" class="px-5 py-2 rounded-xl bg-amberGlow hover:bg-amber-400 text-coffee-950 font-bold text-xs transition">
+                                <i class="fa-solid fa-plus mr-1"></i> 加入預留清單
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <div class="space-y-5">
+                        <div class="bg-emerald-950/80 border border-emerald-800/60 p-4 rounded-2xl flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-emerald-900 flex items-center justify-center text-emerald-400 font-bold shrink-0">
+                                <i class="fa-solid fa-wind text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block">Fluid-Bed Roaster Guide</span>
+                                <h4 class="font-serif font-bold text-base text-coffee-50">${bean.name}</h4>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 bg-coffee-950/80 p-4 rounded-xl border border-emerald-900/40 text-xs space-y-2.5">
+                            <div class="flex items-start gap-2 text-coffee-200">
+                                <i class="fa-solid fa-scale-balanced text-emerald-400 mt-0.5"></i>
+                                <div><strong>投豆量與機型：</strong><br><span class="text-coffee-300 font-mono">${bean.roastGuide.batchSize}</span></div>
+                            </div>
+                            <div class="flex items-start gap-2 text-coffee-200">
+                                <i class="fa-solid fa-fire-flame-simple text-amberGlow mt-0.5"></i>
+                                <div><strong>建議入豆溫：</strong><br><span class="text-coffee-300">${bean.roastGuide.entryTemp}</span></div>
+                            </div>
+                            <div class="flex items-start gap-2 text-coffee-200">
+                                <i class="fa-solid fa-gauge-high text-emerald-400 mt-0.5"></i>
+                                <div><strong>脫水期操作：</strong><br><span class="text-coffee-300">${bean.roastGuide.dehydration}</span></div>
+                            </div>
+                            <div class="flex items-start gap-2 text-coffee-200">
+                                <i class="fa-solid fa-stopwatch text-amberGlow mt-0.5"></i>
+                                <div><strong>一爆與下豆階段：</strong><br><span class="text-coffee-300">${bean.roastGuide.firstCrack}</span></div>
+                            </div>
+                            <div class="flex items-start gap-2 text-coffee-200">
+                                <i class="fa-solid fa-mug-hot text-amberGlow mt-0.5"></i>
+                                <div><strong>目標杯測風味：</strong><br><span class="text-coffee-300 font-medium">${bean.roastGuide.targetFlavor}</span></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-coffee-900/90 p-3.5 rounded-xl border border-coffee-800 text-[11px] text-coffee-300 leading-relaxed">
+                            <i class="fa-solid fa-triangle-exclamation text-amberGlow mr-1"></i> <strong>浮風式烘焙提醒：</strong>熱風機傳熱對流快、升溫迅速。請務必嚴格遵守建議投豆量，避免過量導致生豆無法流暢翻滾而外熟內生。
+                        </div>
+
+                        <div class="pt-4 border-t border-coffee-800 flex items-center justify-between">
+                            <span class="text-xs text-coffee-300">生豆現貨庫存: <strong class="text-emerald-400 font-mono">${bean.stockGrams}g</strong></span>
+                            <button onclick="addToReservation('${bean.id}', 'green'); closeModal();" class="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs transition">
+                                <i class="fa-solid fa-plus mr-1"></i> 預留此生豆
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const modal = document.getElementById('beanModal');
+            const modalContainer = document.getElementById('modalContainer');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContainer.classList.remove('scale-95');
+            modalContainer.classList.add('scale-100');
+        }
+
+        function openGlobalRoastGuide() {
+            const modalContent = document.getElementById('modalContent');
             modalContent.innerHTML = `
-                <div class="space-y-5">
-                    <div class="relative h-48 rounded-xl overflow-hidden border border-coffee-700">
-                        <img src="${bean.image}" class="w-full h-full object-cover" onerror="handleImageError(this)">
-                        <div class="absolute inset-0 bg-gradient-to-t from-coffee-950 via-transparent to-transparent"></div>
-                        <div class="absolute bottom-3 left-3 flex items-center gap-2">
-                            <span class="bg-amberGlow text-coffee-950 text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1">
-                                <i class="${getProcessIconSymbol(bean.process)}"></i> ${bean.region} SOE
-                            </span>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between border-b border-coffee-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-book-open text-amberGlow"></i>
+                            <h4 class="font-serif font-bold text-base text-coffee-50">家用浮風熱風式咖啡豆烘焙指南</h4>
                         </div>
                     </div>
 
-                    <div class="space-y-2">
-                        <h3 class="font-serif text-xl font-bold text-coffee-50">${bean.name}</h3>
-                        <p class="text-xs text-amberGlow font-mono">烘焙日期: ${bean.roastDate} &bull; 處理法: ${getProcessDisplayName(bean.process)}</p>
-                        <p class="text-xs text-coffee-200"><i class="fa-solid fa-temperature-three-quarters text-amberGlow mr-1"></i> 建議沖煮水溫：<strong>${bean.temp}</strong></p>
-                    </div>
+                    <div class="space-y-3 text-xs text-coffee-200 leading-relaxed max-h-[60vh] overflow-y-auto pr-2">
+                        <p>家用浮風熱風式烘焙機（如 Fresh Roast、Kaleido 迷你熱風機或 DIY 流風式烘焙機）透過高速熱風將咖啡生豆吹起並使其在烘焙室內不斷上下翻滾。這種烘焙方式具有<strong>傳熱對流快、升溫迅速、杯測風味乾淨明亮</strong>的特點。</p>
+                        
+                        <div class="bg-coffee-950 p-3 rounded-xl border border-coffee-800 space-y-1">
+                            <h5 class="font-bold text-amberGlow">3大核心原則</h5>
+                            <ul class="list-disc pl-4 space-y-1 text-coffee-300">
+                                <li><strong>精準控制投豆量：</strong>絕不能過量。以 100g 至 150g 為最佳區間。</li>
+                                <li><strong>善用低溫入豆與風速調節：</strong>建議入豆溫設定在 175°C 至 190°C。脫水期保持較高風速（7-8成），梅納反應期適度降火力。</li>
+                            </ul>
+                        </div>
 
-                    <p class="text-xs text-coffee-200 leading-relaxed bg-coffee-950/60 p-3.5 rounded-xl border border-coffee-800">
-                        ${bean.description}
-                    </p>
-
-                    <div>
-                        <span class="text-xs text-coffee-400 block mb-2 font-medium">主要風味標籤：</span>
-                        <div class="flex flex-wrap gap-1.5">
-                            ${bean.notes.map(n => `<span class="bg-coffee-800 text-amberGlow text-xs px-2.5 py-1 rounded-lg border border-coffee-700">${n}</span>`).join('')}
+                        <div class="bg-coffee-950 p-3 rounded-xl border border-coffee-800 space-y-1">
+                            <h5 class="font-bold text-amberGlow">常見誤區排查</h5>
+                            <p class="text-coffee-300"><strong>豆表焦黑但生青味重：</strong>初期火力開太猛導致外焦內生。對策為降低入豆溫度 10°C，前 3 分鐘拉高風速。</p>
                         </div>
                     </div>
 
-                    <div class="pt-4 border-t border-coffee-800 flex items-center justify-between">
-                        <span class="text-xs text-coffee-300">現貨剩餘: <strong class="text-amberGlow font-mono">${bean.stockGrams}g</strong></span>
-                        <button onclick="addToReservation('${bean.id}', 'roasted'); closeModal();" class="px-5 py-2 rounded-xl bg-amberGlow hover:bg-amber-400 text-coffee-950 font-bold text-xs transition">
-                            <i class="fa-solid fa-plus mr-1"></i> 加入預留清單
-                        </button>
+                    <div class="pt-2">
+                        <button onclick="closeModal()" class="w-full py-2.5 rounded-xl bg-amberGlow text-coffee-950 font-bold text-xs">了解，關閉指南</button>
                     </div>
                 </div>
             `;
-
             const modal = document.getElementById('beanModal');
             const modalContainer = document.getElementById('modalContainer');
             modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -976,12 +1113,13 @@
             }, 3500);
         }
 
-        // Pour-Over Calculator & 4:6 Timer Logic
+        // Pour-Over Calculator & Timer Logic
         let timerInterval = null;
         let totalSeconds = 0;
         let isRunning = false;
 
         function updateCalculator() {
+            const method = document.getElementById('brewMethod').value;
             const grams = parseFloat(document.getElementById('coffeeGrams').value) || 20;
             const ratio = parseFloat(document.getElementById('ratioSlider').value) || 15;
             document.getElementById('ratioDisplay').textContent = ratio;
@@ -989,51 +1127,278 @@
             const totalWaterGrams = Math.round(grams * ratio);
             document.getElementById('totalWater').textContent = totalWaterGrams + ' g';
 
-            const preference = document.getElementById('tastePreference').value;
-            let firstPour1, firstPour2;
-
-            if (preference === 'sweet') {
-                firstPour1 = Math.round(totalWaterGrams * 0.15);
-                firstPour2 = Math.round(totalWaterGrams * 0.25);
-            } else if (preference === 'acidic') {
-                firstPour1 = Math.round(totalWaterGrams * 0.25);
-                firstPour2 = Math.round(totalWaterGrams * 0.15);
-            } else {
-                firstPour1 = Math.round(totalWaterGrams * 0.20);
-                firstPour2 = Math.round(totalWaterGrams * 0.20);
-            }
-
-            const remainingWater = totalWaterGrams - (firstPour1 + firstPour2);
-            const thirdPour = Math.round(remainingWater / 3);
-            const fourthPour = totalWaterGrams - (firstPour1 + firstPour2 + thirdPour);
-
-            const steps = [
-                { time: '00:00', title: '第一段注水 (前 40% 調控酸甜)', water: firstPour1, cumulative: firstPour1, desc: '穩定細水流繞圈注水，帶出豐富香氣與乾淨口感。' },
-                { time: '00:45', title: '第二段注水 (完成 40% 區間)', water: firstPour2, cumulative: firstPour1 + firstPour2, desc: '等待水位降至一半後再次注水，決定濃度與甜感基調。' },
-                { time: '01:30', title: '第三段注水 (後 60% 第一發)', water: thirdPour, cumulative: firstPour1 + firstPour2 + thirdPour, desc: '開始均勻注水，萃取主體風味。' },
-                { time: '02:15', title: '第四段注水 (後 60% 第二發)', water: fourthPour, cumulative: totalWaterGrams - fourthPour, desc: '平穩注水，補充豐富層次。' },
-                { time: '03:00', title: '第五段注水 (收尾注水)', water: fourthPour, cumulative: totalWaterGrams, desc: '最後注水至總水量，等待濾杯流乾即完成萃取。' }
-            ];
-
+            const tastePrefContainer = document.getElementById('tastePreferenceContainer');
+            const headerTitle = document.getElementById('stepsHeaderTitle');
             const listEl = document.getElementById('pourStepsList');
             listEl.innerHTML = '';
-            steps.forEach((step, idx) => {
-                const row = document.createElement('div');
-                row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
-                row.innerHTML = `
-                    <div class="space-y-0.5">
-                        <div class="font-bold text-coffee-100 flex items-center gap-2">
-                            <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
+
+            if (method === 'threeKnife') {
+                tastePrefContainer.style.display = 'none';
+                headerTitle.textContent = '日本職人「三刀流」注水法指南 (大水柱/中水柱/細水柱)';
+
+                const firstWater = Math.round(totalWaterGrams * 0.20);
+                const secondWater = Math.round(totalWaterGrams * 0.50);
+                const thirdWater = totalWaterGrams - (firstWater + secondWater);
+
+                const steps = [
+                    { time: '00:00', title: '第一刀 (悶蒸蒸悶)', water: firstWater, cumulative: firstWater, desc: '由中心向外畫同心圓注入，均勻排氣，悶蒸 30 秒。' },
+                    { time: '00:30', title: '第二刀 (主體厚實萃取)', water: secondWater, cumulative: firstWater + secondWater, desc: '穩定中等水柱由內而外螺旋繞圈，萃取出咖啡豐富醇厚油脂與香氣。' },
+                    { time: '01:25', title: '第三刀 (尾段清爽收尾)', water: thirdWater, cumulative: totalWaterGrams, desc: '中心微小細水柱直冲，拉高甜感並去除雜味，等待滴濾完成。' }
+                ];
+
+                steps.forEach((step, idx) => {
+                    const row = document.createElement('div');
+                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
+                    row.innerHTML = `
+                        <div class="space-y-0.5">
+                            <div class="font-bold text-coffee-100 flex items-center gap-2">
+                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
+                            </div>
+                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
                         </div>
-                        <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
-                    </div>
-                    <div class="text-right font-mono">
-                        <span class="text-amberGlow font-bold">+${step.water}g</span>
-                        <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
-                    </div>
-                `;
-                listEl.appendChild(row);
-            });
+                        <div class="text-right font-mono">
+                            <span class="text-amberGlow font-bold">+${step.water}g</span>
+                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
+                        </div>
+                    `;
+                    listEl.appendChild(row);
+                });
+
+            } else if (method === 'konoDrop') {
+                tastePrefContainer.style.display = 'none';
+                headerTitle.textContent = '河野式「點滴悶蒸」極濃法指南 (極細流緩慢釋放)';
+
+                const bloomWater = Math.round(totalWaterGrams * 0.25);
+                const secondWater = Math.round(totalWaterGrams * 0.40);
+                const thirdWater = totalWaterGrams - (bloomWater + secondWater);
+
+                const steps = [
+                    { time: '00:00', title: '點滴悶蒸 (中心微滴)', water: bloomWater, cumulative: bloomWater, desc: '使用極細水流或專用滴水壺，在咖啡粉中心持續點滴 45 秒，釋放頂級醇厚度。' },
+                    { time: '00:45', title: '第二段微圈注水', water: secondWater, cumulative: bloomWater + secondWater, desc: '以極小硬幣大小範圍溫和繞圈，避免沖破粉床。' },
+                    { time: '01:40', title: '第三段收尾注水', water: thirdWater, cumulative: totalWaterGrams, desc: '平穩注滿至總水量，萃取出如濃縮般的高甜感與黏稠度。' }
+                ];
+
+                steps.forEach((step, idx) => {
+                    const row = document.createElement('div');
+                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
+                    row.innerHTML = `
+                        <div class="space-y-0.5">
+                            <div class="font-bold text-coffee-100 flex items-center gap-2">
+                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
+                            </div>
+                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
+                        </div>
+                        <div class="text-right font-mono">
+                            <span class="text-amberGlow font-bold">+${step.water}g</span>
+                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
+                        </div>
+                    `;
+                    listEl.appendChild(row);
+                });
+
+            } else if (method === 'iciclesFlow') {
+                tastePrefContainer.style.display = 'none';
+                headerTitle.textContent = '1:1 黃金「冰釀激流」法指南 (冰塊急冷鎖香)';
+
+                const iceWater = Math.round(totalWaterGrams * 0.40);
+                const hotBrewWater = totalWaterGrams - iceWater;
+
+                const steps = [
+                    { time: '00:00', title: '下壺鋪冰準備', water: 0, cumulative: 0, desc: `請在濾杯下壺預先放入約 ${Math.round(totalWaterGrams * 0.35)}g 的冰塊進行急速降溫冷萃。` },
+                    { time: '00:15', title: '高溫熱水快速注水', water: hotBrewWater, cumulative: hotBrewWater, desc: '使用較細研磨度、92°C 熱水進行高濃度快速萃取，直接滴落至冰塊上瞬間鎖住花香。' },
+                    { time: '01:30', title: '均勻搖晃冰鎮', water: iceWater, cumulative: totalWaterGrams, desc: '待濾杯滴乾後，搖晃下壺使融冰與咖啡完美均質，冰涼享用。' }
+                ];
+
+                steps.forEach((step, idx) => {
+                    const row = document.createElement('div');
+                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
+                    row.innerHTML = `
+                        <div class="space-y-0.5">
+                            <div class="font-bold text-coffee-100 flex items-center gap-2">
+                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
+                            </div>
+                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
+                        </div>
+                        <div class="text-right font-mono">
+                            <span class="text-amberGlow font-bold">+${step.water}g</span>
+                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
+                        </div>
+                    `;
+                    listEl.appendChild(row);
+                });
+
+            } else if (method === 'v60Classic') {
+                tastePrefContainer.style.display = 'none';
+                headerTitle.textContent = 'Hario V60 經典三段式注水法 (平衡清爽)';
+
+                const p1 = Math.round(totalWaterGrams * 0.20);
+                const p2 = Math.round(totalWaterGrams * 0.50);
+                const p3 = totalWaterGrams - (p1 + p2);
+
+                const steps = [
+                    { time: '00:00', title: '悶蒸排氣', water: p1, cumulative: p1, desc: '注入 2 倍咖啡粉重的水量（約 40g），溫和繞圈悶蒸 35 秒。' },
+                    { time: '00:35', title: '第二段注水 (主體風味)', water: p2, cumulative: p1 + p2, desc: '由中心向外畫圓穩定注水至 70% 總水量，帶出豐富層次。' },
+                    { time: '01:20', title: '第三段收尾注水', water: p3, cumulative: totalWaterGrams, desc: '平穩注入剩餘水量至目標總重，輕晃濾杯後等待滴濾完成。' }
+                ];
+
+                steps.forEach((step, idx) => {
+                    const row = document.createElement('div');
+                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
+                    row.innerHTML = `
+                        <div class="space-y-0.5">
+                            <div class="font-bold text-coffee-100 flex items-center gap-2">
+                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
+                            </div>
+                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
+                        </div>
+                        <div class="text-right font-mono">
+                            <span class="text-amberGlow font-bold">+${step.water}g</span>
+                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
+                        </div>
+                    `;
+                    listEl.appendChild(row);
+                });
+
+            } else if (method === 'chemex') {
+                tastePrefContainer.style.display = 'none';
+                headerTitle.textContent = 'Chemex 緩速厚濾紙潔淨法 (極致純淨)';
+
+                const p1 = Math.round(totalWaterGrams * 0.25);
+                const p2 = Math.round(totalWaterGrams * 0.40);
+                const p3 = totalWaterGrams - (p1 + p2);
+
+                const steps = [
+                    { time: '00:00', title: '溫壺與厚濾紙悶蒸', water: p1, cumulative: p1, desc: 'Chemex 專用厚濾紙吸水較多，先注水悶蒸 45 秒使氣體完全釋放。' },
+                    { time: '00:45', title: '第二段平穩注水', water: p2, cumulative: p1 + p2, desc: '以穩定中速繞圈注水，厚濾紙過濾掉多餘油脂，保留純淨花香。' },
+                    { time: '01:50', title: '第三段定點注水收尾', water: p3, cumulative: totalWaterGrams, desc: '中心緩慢補水至總重，因流速較慢總萃取時間約 3 分 30 秒。' }
+                ];
+
+                steps.forEach((step, idx) => {
+                    const row = document.createElement('div');
+                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
+                    row.innerHTML = `
+                        <div class="space-y-0.5">
+                            <div class="font-bold text-coffee-100 flex items-center gap-2">
+                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
+                            </div>
+                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
+                        </div>
+                        <div class="text-right font-mono">
+                            <span class="text-amberGlow font-bold">+${step.water}g</span>
+                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
+                        </div>
+                    `;
+                    listEl.appendChild(row);
+                });
+
+            } else if (method === 'frenchPress') {
+                tastePrefContainer.style.display = 'none';
+                headerTitle.textContent = '法壓壺 (French Press) 浸泡萃取法 (飽滿醇厚)';
+
+                const steps = [
+                    { time: '00:00', title: '一次性注水浸泡', water: totalWaterGrams, cumulative: totalWaterGrams, desc: '使用粗研磨咖啡粉，一次性將 ${totalWaterGrams}g 熱水快速注入，使粉末完全浸泡。' },
+                    { time: '01:00', title: '表面粉蓋攪拌', water: 0, cumulative: totalWaterGrams, desc: '用湯匙輕輕攪拌浮在表面的粉層，使咖啡粉沉降。' },
+                    { time: '04:00', title: '壓下濾網享用', water: 0, cumulative: totalWaterGrams, desc: '靜置至 4 分鐘整，緩慢且平穩地將金屬濾網壓到底，即可倒出享用濃郁油脂。' }
+                ];
+
+                steps.forEach((step, idx) => {
+                    const row = document.createElement('div');
+                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
+                    row.innerHTML = `
+                        <div class="space-y-0.5">
+                            <div class="font-bold text-coffee-100 flex items-center gap-2">
+                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
+                            </div>
+                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
+                        </div>
+                        <div class="text-right font-mono">
+                            <span class="text-amberGlow font-bold">${step.water > 0 ? '+' + step.water + 'g' : '浸泡'}</span>
+                            <div class="text-[10px] text-coffee-400">總重 ${step.cumulative}g</div>
+                        </div>
+                    `;
+                    listEl.appendChild(row);
+                });
+
+            } else if (method === 'aeropress') {
+                tastePrefContainer.style.display = 'none';
+                headerTitle.textContent = '愛樂壓 (AeroPress) 倒沖浸泡壓濾法';
+
+                const p1 = Math.round(totalWaterGrams * 0.60);
+                const p2 = totalWaterGrams - p1;
+
+                const steps = [
+                    { time: '00:00', title: '倒置法注水浸泡', water: p1, cumulative: p1, desc: '愛樂壓倒置架設，加入咖啡粉與 60% 熱水，輕輕攪拌 10 秒。' },
+                    { time: '01:00', title: '補滿剩餘水量並裝濾紙', water: p2, cumulative: totalWaterGrams, desc: '加滿剩餘熱水，旋上裝好濾紙的濾蓋。' },
+                    { time: '01:45', title: '快速翻轉與下壓', water: 0, cumulative: totalWaterGrams, desc: '平穩將愛樂壓翻轉至分享壺上，花費 30 秒平穩向下施力壓出咖啡液。' }
+                ];
+
+                steps.forEach((step, idx) => {
+                    const row = document.createElement('div');
+                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
+                    row.innerHTML = `
+                        <div class="space-y-0.5">
+                            <div class="font-bold text-coffee-100 flex items-center gap-2">
+                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
+                            </div>
+                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
+                        </div>
+                        <div class="text-right font-mono">
+                            <span class="text-amberGlow font-bold">${step.water > 0 ? '+' + step.water + 'g' : '壓濾'}</span>
+                            <div class="text-[10px] text-coffee-400">總重 ${step.cumulative}g</div>
+                        </div>
+                    `;
+                    listEl.appendChild(row);
+                });
+
+            } else {
+                // 4:6 Method
+                tastePrefContainer.style.display = 'block';
+                headerTitle.textContent = '4:6 階段注水指南';
+
+                const preference = document.getElementById('tastePreference').value;
+                let firstPour1, firstPour2;
+
+                if (preference === 'sweet') {
+                    firstPour1 = Math.round(totalWaterGrams * 0.15);
+                    firstPour2 = Math.round(totalWaterGrams * 0.25);
+                } else if (preference === 'acidic') {
+                    firstPour1 = Math.round(totalWaterGrams * 0.25);
+                    firstPour2 = Math.round(totalWaterGrams * 0.15);
+                } else {
+                    firstPour1 = Math.round(totalWaterGrams * 0.20);
+                    firstPour2 = Math.round(totalWaterGrams * 0.20);
+                }
+
+                const remainingWater = totalWaterGrams - (firstPour1 + firstPour2);
+                const thirdPour = Math.round(remainingWater / 3);
+                const fourthPour = totalWaterGrams - (firstPour1 + firstPour2 + thirdPour);
+
+                const steps = [
+                    { time: '00:00', title: '第一段注水 (前 40% 調控酸甜)', water: firstPour1, cumulative: firstPour1, desc: '穩定細水流繞圈注水，帶出豐富香氣與乾淨口感。' },
+                    { time: '00:45', title: '第二段注水 (完成 40% 區間)', water: firstPour2, cumulative: firstPour1 + firstPour2, desc: '等待水位降至一半後再次注水，決定濃度與甜感基調。' },
+                    { time: '01:30', title: '第三段注水 (後 60% 第一發)', water: thirdPour, cumulative: firstPour1 + firstPour2 + thirdPour, desc: '開始均勻注水，萃取主體風味。' },
+                    { time: '02:15', title: '第四段注水 (後 60% 第二發)', water: fourthPour, cumulative: totalWaterGrams - fourthPour, desc: '平穩注水，補充豐富層次。' },
+                    { time: '03:00', title: '第五段注水 (收尾注水)', water: fourthPour, cumulative: totalWaterGrams, desc: '最後注水至總水量，等待濾杯流乾即完成萃取。' }
+                ];
+
+                steps.forEach((step, idx) => {
+                    const row = document.createElement('div');
+                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
+                    row.innerHTML = `
+                        <div class="space-y-0.5">
+                            <div class="font-bold text-coffee-100 flex items-center gap-2">
+                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
+                            </div>
+                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
+                        </div>
+                        <div class="text-right font-mono">
+                            <span class="text-amberGlow font-bold">+${step.water}g</span>
+                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
+                        </div>
+                    `;
+                    listEl.appendChild(row);
+                });
+            }
         }
 
         function startTimer() {
@@ -1069,7 +1434,6 @@
 
         function toggleAmbientSound() {
             if (!sharedAudioEl) {
-                // Real streaming copyright-free slow coffee house jazz audio stream
                 sharedAudioEl = new Audio('https://stream.zeno.fm/f3wvbbqmdg8uv');
                 sharedAudioEl.loop = true;
                 sharedAudioEl.volume = 0.4;
@@ -1106,7 +1470,6 @@
             menu.classList.toggle('hidden');
         }
 
-        // Close modal or drawer on Escape key
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeModal();
@@ -1114,7 +1477,6 @@
             }
         });
 
-        // Initialize on load
         window.onload = function() {
             renderRoastedBeans();
             renderGreenBeans();

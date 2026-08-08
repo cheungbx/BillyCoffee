@@ -1117,6 +1117,12 @@
         let timerInterval = null;
         let totalSeconds = 0;
         let isRunning = false;
+        let currentStepsData = [];
+
+        function parseTimeToSeconds(timeStr) {
+            const parts = timeStr.split(':');
+            return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+        }
 
         function updateCalculator() {
             const method = document.getElementById('brewMethod').value;
@@ -1131,6 +1137,7 @@
             const headerTitle = document.getElementById('stepsHeaderTitle');
             const listEl = document.getElementById('pourStepsList');
             listEl.innerHTML = '';
+            currentStepsData = [];
 
             if (method === 'threeKnife') {
                 tastePrefContainer.style.display = 'none';
@@ -1140,29 +1147,11 @@
                 const secondWater = Math.round(totalWaterGrams * 0.50);
                 const thirdWater = totalWaterGrams - (firstWater + secondWater);
 
-                const steps = [
+                currentStepsData = [
                     { time: '00:00', title: '第一刀 (悶蒸蒸悶)', water: firstWater, cumulative: firstWater, desc: '由中心向外畫同心圓注入，均勻排氣，悶蒸 30 秒。' },
                     { time: '00:30', title: '第二刀 (主體厚實萃取)', water: secondWater, cumulative: firstWater + secondWater, desc: '穩定中等水柱由內而外螺旋繞圈，萃取出咖啡豐富醇厚油脂與香氣。' },
                     { time: '01:25', title: '第三刀 (尾段清爽收尾)', water: thirdWater, cumulative: totalWaterGrams, desc: '中心微小細水柱直冲，拉高甜感並去除雜味，等待滴濾完成。' }
                 ];
-
-                steps.forEach((step, idx) => {
-                    const row = document.createElement('div');
-                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
-                    row.innerHTML = `
-                        <div class="space-y-0.5">
-                            <div class="font-bold text-coffee-100 flex items-center gap-2">
-                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
-                            </div>
-                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
-                        </div>
-                        <div class="text-right font-mono">
-                            <span class="text-amberGlow font-bold">+${step.water}g</span>
-                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
-                        </div>
-                    `;
-                    listEl.appendChild(row);
-                });
 
             } else if (method === 'konoDrop') {
                 tastePrefContainer.style.display = 'none';
@@ -1172,29 +1161,11 @@
                 const secondWater = Math.round(totalWaterGrams * 0.40);
                 const thirdWater = totalWaterGrams - (bloomWater + secondWater);
 
-                const steps = [
+                currentStepsData = [
                     { time: '00:00', title: '點滴悶蒸 (中心微滴)', water: bloomWater, cumulative: bloomWater, desc: '使用極細水流或專用滴水壺，在咖啡粉中心持續點滴 45 秒，釋放頂級醇厚度。' },
                     { time: '00:45', title: '第二段微圈注水', water: secondWater, cumulative: bloomWater + secondWater, desc: '以極小硬幣大小範圍溫和繞圈，避免沖破粉床。' },
                     { time: '01:40', title: '第三段收尾注水', water: thirdWater, cumulative: totalWaterGrams, desc: '平穩注滿至總水量，萃取出如濃縮般的高甜感與黏稠度。' }
                 ];
-
-                steps.forEach((step, idx) => {
-                    const row = document.createElement('div');
-                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
-                    row.innerHTML = `
-                        <div class="space-y-0.5">
-                            <div class="font-bold text-coffee-100 flex items-center gap-2">
-                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
-                            </div>
-                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
-                        </div>
-                        <div class="text-right font-mono">
-                            <span class="text-amberGlow font-bold">+${step.water}g</span>
-                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
-                        </div>
-                    `;
-                    listEl.appendChild(row);
-                });
 
             } else if (method === 'iciclesFlow') {
                 tastePrefContainer.style.display = 'none';
@@ -1203,29 +1174,11 @@
                 const iceWater = Math.round(totalWaterGrams * 0.40);
                 const hotBrewWater = totalWaterGrams - iceWater;
 
-                const steps = [
+                currentStepsData = [
                     { time: '00:00', title: '下壺鋪冰準備', water: 0, cumulative: 0, desc: `請在濾杯下壺預先放入約 ${Math.round(totalWaterGrams * 0.35)}g 的冰塊進行急速降溫冷萃。` },
                     { time: '00:15', title: '高溫熱水快速注水', water: hotBrewWater, cumulative: hotBrewWater, desc: '使用較細研磨度、92°C 熱水進行高濃度快速萃取，直接滴落至冰塊上瞬間鎖住花香。' },
                     { time: '01:30', title: '均勻搖晃冰鎮', water: iceWater, cumulative: totalWaterGrams, desc: '待濾杯滴乾後，搖晃下壺使融冰與咖啡完美均質，冰涼享用。' }
                 ];
-
-                steps.forEach((step, idx) => {
-                    const row = document.createElement('div');
-                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
-                    row.innerHTML = `
-                        <div class="space-y-0.5">
-                            <div class="font-bold text-coffee-100 flex items-center gap-2">
-                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
-                            </div>
-                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
-                        </div>
-                        <div class="text-right font-mono">
-                            <span class="text-amberGlow font-bold">+${step.water}g</span>
-                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
-                        </div>
-                    `;
-                    listEl.appendChild(row);
-                });
 
             } else if (method === 'v60Classic') {
                 tastePrefContainer.style.display = 'none';
@@ -1235,29 +1188,11 @@
                 const p2 = Math.round(totalWaterGrams * 0.50);
                 const p3 = totalWaterGrams - (p1 + p2);
 
-                const steps = [
+                currentStepsData = [
                     { time: '00:00', title: '悶蒸排氣', water: p1, cumulative: p1, desc: '注入 2 倍咖啡粉重的水量（約 40g），溫和繞圈悶蒸 35 秒。' },
                     { time: '00:35', title: '第二段注水 (主體風味)', water: p2, cumulative: p1 + p2, desc: '由中心向外畫圓穩定注水至 70% 總水量，帶出豐富層次。' },
                     { time: '01:20', title: '第三段收尾注水', water: p3, cumulative: totalWaterGrams, desc: '平穩注入剩餘水量至目標總重，輕晃濾杯後等待滴濾完成。' }
                 ];
-
-                steps.forEach((step, idx) => {
-                    const row = document.createElement('div');
-                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
-                    row.innerHTML = `
-                        <div class="space-y-0.5">
-                            <div class="font-bold text-coffee-100 flex items-center gap-2">
-                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
-                            </div>
-                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
-                        </div>
-                        <div class="text-right font-mono">
-                            <span class="text-amberGlow font-bold">+${step.water}g</span>
-                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
-                        </div>
-                    `;
-                    listEl.appendChild(row);
-                });
 
             } else if (method === 'chemex') {
                 tastePrefContainer.style.display = 'none';
@@ -1267,57 +1202,21 @@
                 const p2 = Math.round(totalWaterGrams * 0.40);
                 const p3 = totalWaterGrams - (p1 + p2);
 
-                const steps = [
+                currentStepsData = [
                     { time: '00:00', title: '溫壺與厚濾紙悶蒸', water: p1, cumulative: p1, desc: 'Chemex 專用厚濾紙吸水較多，先注水悶蒸 45 秒使氣體完全釋放。' },
                     { time: '00:45', title: '第二段平穩注水', water: p2, cumulative: p1 + p2, desc: '以穩定中速繞圈注水，厚濾紙過濾掉多餘油脂，保留純淨花香。' },
                     { time: '01:50', title: '第三段定點注水收尾', water: p3, cumulative: totalWaterGrams, desc: '中心緩慢補水至總重，因流速較慢總萃取時間約 3 分 30 秒。' }
                 ];
 
-                steps.forEach((step, idx) => {
-                    const row = document.createElement('div');
-                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
-                    row.innerHTML = `
-                        <div class="space-y-0.5">
-                            <div class="font-bold text-coffee-100 flex items-center gap-2">
-                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
-                            </div>
-                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
-                        </div>
-                        <div class="text-right font-mono">
-                            <span class="text-amberGlow font-bold">+${step.water}g</span>
-                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
-                        </div>
-                    `;
-                    listEl.appendChild(row);
-                });
-
             } else if (method === 'frenchPress') {
                 tastePrefContainer.style.display = 'none';
                 headerTitle.textContent = '法壓壺 (French Press) 浸泡萃取法 (飽滿醇厚)';
 
-                const steps = [
-                    { time: '00:00', title: '一次性注水浸泡', water: totalWaterGrams, cumulative: totalWaterGrams, desc: '使用粗研磨咖啡粉，一次性將 ${totalWaterGrams}g 熱水快速注入，使粉末完全浸泡。' },
+                currentStepsData = [
+                    { time: '00:00', title: '一次性注水浸泡', water: totalWaterGrams, cumulative: totalWaterGrams, desc: `使用粗研磨咖啡粉，一次性將 ${totalWaterGrams}g 熱水快速注入，使粉末完全浸泡。` },
                     { time: '01:00', title: '表面粉蓋攪拌', water: 0, cumulative: totalWaterGrams, desc: '用湯匙輕輕攪拌浮在表面的粉層，使咖啡粉沉降。' },
                     { time: '04:00', title: '壓下濾網享用', water: 0, cumulative: totalWaterGrams, desc: '靜置至 4 分鐘整，緩慢且平穩地將金屬濾網壓到底，即可倒出享用濃郁油脂。' }
                 ];
-
-                steps.forEach((step, idx) => {
-                    const row = document.createElement('div');
-                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
-                    row.innerHTML = `
-                        <div class="space-y-0.5">
-                            <div class="font-bold text-coffee-100 flex items-center gap-2">
-                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
-                            </div>
-                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
-                        </div>
-                        <div class="text-right font-mono">
-                            <span class="text-amberGlow font-bold">${step.water > 0 ? '+' + step.water + 'g' : '浸泡'}</span>
-                            <div class="text-[10px] text-coffee-400">總重 ${step.cumulative}g</div>
-                        </div>
-                    `;
-                    listEl.appendChild(row);
-                });
 
             } else if (method === 'aeropress') {
                 tastePrefContainer.style.display = 'none';
@@ -1326,29 +1225,11 @@
                 const p1 = Math.round(totalWaterGrams * 0.60);
                 const p2 = totalWaterGrams - p1;
 
-                const steps = [
+                currentStepsData = [
                     { time: '00:00', title: '倒置法注水浸泡', water: p1, cumulative: p1, desc: '愛樂壓倒置架設，加入咖啡粉與 60% 熱水，輕輕攪拌 10 秒。' },
                     { time: '01:00', title: '補滿剩餘水量並裝濾紙', water: p2, cumulative: totalWaterGrams, desc: '加滿剩餘熱水，旋上裝好濾紙的濾蓋。' },
                     { time: '01:45', title: '快速翻轉與下壓', water: 0, cumulative: totalWaterGrams, desc: '平穩將愛樂壓翻轉至分享壺上，花費 30 秒平穩向下施力壓出咖啡液。' }
                 ];
-
-                steps.forEach((step, idx) => {
-                    const row = document.createElement('div');
-                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
-                    row.innerHTML = `
-                        <div class="space-y-0.5">
-                            <div class="font-bold text-coffee-100 flex items-center gap-2">
-                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
-                            </div>
-                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
-                        </div>
-                        <div class="text-right font-mono">
-                            <span class="text-amberGlow font-bold">${step.water > 0 ? '+' + step.water + 'g' : '壓濾'}</span>
-                            <div class="text-[10px] text-coffee-400">總重 ${step.cumulative}g</div>
-                        </div>
-                    `;
-                    listEl.appendChild(row);
-                });
 
             } else {
                 // 4:6 Method
@@ -1373,32 +1254,66 @@
                 const thirdPour = Math.round(remainingWater / 3);
                 const fourthPour = totalWaterGrams - (firstPour1 + firstPour2 + thirdPour);
 
-                const steps = [
+                currentStepsData = [
                     { time: '00:00', title: '第一段注水 (前 40% 調控酸甜)', water: firstPour1, cumulative: firstPour1, desc: '穩定細水流繞圈注水，帶出豐富香氣與乾淨口感。' },
                     { time: '00:45', title: '第二段注水 (完成 40% 區間)', water: firstPour2, cumulative: firstPour1 + firstPour2, desc: '等待水位降至一半後再次注水，決定濃度與甜感基調。' },
                     { time: '01:30', title: '第三段注水 (後 60% 第一發)', water: thirdPour, cumulative: firstPour1 + firstPour2 + thirdPour, desc: '開始均勻注水，萃取主體風味。' },
                     { time: '02:15', title: '第四段注水 (後 60% 第二發)', water: fourthPour, cumulative: totalWaterGrams - fourthPour, desc: '平穩注水，補充豐富層次。' },
                     { time: '03:00', title: '第五段注水 (收尾注水)', water: fourthPour, cumulative: totalWaterGrams, desc: '最後注水至總水量，等待濾杯流乾即完成萃取。' }
                 ];
-
-                steps.forEach((step, idx) => {
-                    const row = document.createElement('div');
-                    row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs";
-                    row.innerHTML = `
-                        <div class="space-y-0.5">
-                            <div class="font-bold text-coffee-100 flex items-center gap-2">
-                                <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
-                            </div>
-                            <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
-                        </div>
-                        <div class="text-right font-mono">
-                            <span class="text-amberGlow font-bold">+${step.water}g</span>
-                            <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
-                        </div>
-                    `;
-                    listEl.appendChild(row);
-                });
             }
+
+            // Render elements with a unique id/class for progressive highlighting
+            currentStepsData.forEach((step, idx) => {
+                const row = document.createElement('div');
+                row.id = `brew-step-${idx}`;
+                row.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs transition-all duration-300";
+                row.innerHTML = `
+                    <div class="space-y-0.5">
+                        <div class="font-bold text-coffee-100 flex items-center gap-2">
+                            <span class="font-mono text-amberGlow">#${idx+1} [${step.time}]</span> ${step.title}
+                        </div>
+                        <p class="text-[11px] text-coffee-400 font-light">${step.desc}</p>
+                    </div>
+                    <div class="text-right font-mono">
+                        <span class="text-amberGlow font-bold">${step.water > 0 ? '+' + step.water + 'g' : (step.cumulative > 0 ? '浸泡' : '準備')}</span>
+                        <div class="text-[10px] text-coffee-400">累計 ${step.cumulative}g</div>
+                    </div>
+                `;
+                listEl.appendChild(row);
+            });
+
+            highlightActiveStep();
+        }
+
+        function highlightActiveStep() {
+            if (!currentStepsData || currentStepsData.length === 0) return;
+
+            // Determine active step index based on current totalSeconds
+            let activeIdx = 0;
+            for (let i = 0; i < currentStepsData.length; i++) {
+                const stepSecs = parseTimeToSeconds(currentStepsData[i].time);
+                if (totalSeconds >= stepSecs) {
+                    activeIdx = i;
+                }
+            }
+
+            // Update styles for each step item element
+            currentStepsData.forEach((step, idx) => {
+                const rowEl = document.getElementById(`brew-step-${idx}`);
+                if (!rowEl) return;
+
+                if (idx === activeIdx) {
+                    // Active step highlight style
+                    rowEl.className = "bg-coffee-900 p-3 rounded-xl border-2 border-amberGlow shadow-lg shadow-amber-950/40 flex items-center justify-between text-xs transition-all duration-300 scale-[1.01]";
+                } else if (idx < activeIdx) {
+                    // Completed step style (dimmed slightly)
+                    rowEl.className = "bg-coffee-950/70 opacity-60 p-3 rounded-xl border border-coffee-800/60 flex items-center justify-between text-xs transition-all duration-300";
+                } else {
+                    // Upcoming step style
+                    rowEl.className = "bg-coffee-950 p-3 rounded-xl border border-coffee-800/80 flex items-center justify-between text-xs transition-all duration-300";
+                }
+            });
         }
 
         function startTimer() {
@@ -1411,6 +1326,9 @@
                 const mins = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
                 const secs = String(totalSeconds % 60).padStart(2, '0');
                 document.getElementById('timerDisplay').textContent = `${mins}:${secs}`;
+                
+                // Trigger step highlighting updates as timer progresses
+                highlightActiveStep();
             }, 1000);
         }
 
@@ -1426,6 +1344,7 @@
             totalSeconds = 0;
             document.getElementById('timerDisplay').textContent = "00:00";
             document.getElementById('startBtn').innerHTML = '<i class="fa-solid fa-play"></i> 開始計時';
+            highlightActiveStep();
         }
 
         // Real Coffee House Jazz Audio Stream

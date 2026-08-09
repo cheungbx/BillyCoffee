@@ -297,7 +297,7 @@
                     <!-- Step breakdown list -->
                     <div class="space-y-3">
                         <h5 id="stepsHeaderTitle" class="text-xs font-mono uppercase tracking-wider text-coffee-400">分段注水指引與秒數</h5>
-                        <div id="pourStepsList" class="space-y-2.5 max-h-56 overflow-y-auto pr-1">
+                        <div id="pourStepsList" class="space-y-2.5 max-h-[420px] overflow-y-auto pr-1">
                             <!-- Populated via JS -->
                         </div>
                     </div>
@@ -415,6 +415,35 @@
     </div>
 
     <script>
+        // Live Stream Audio Setup
+        let jazzAudio = new Audio('http://mscp3.live-streams.nl:8340/jazz-flac.flac');
+        jazzAudio.crossOrigin = "anonymous";
+        jazzAudio.loop = true;
+
+        function toggleAmbientSound() {
+            const dot = document.getElementById('audioDot');
+            const ping = document.getElementById('audioPing');
+            const statusText = document.getElementById('audioStatusText');
+            
+            if (jazzAudio.paused) {
+                jazzAudio.play().then(() => {
+                    dot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-amberGlow";
+                    ping.className = "absolute inline-flex h-full w-full rounded-full bg-amberGlow opacity-75 animate-ping";
+                    statusText.textContent = "爵士樂直播播放中";
+                    showToast('已連接線上慢調爵士樂直播！');
+                }).catch(error => {
+                    console.error("Audio playback error:", error);
+                    showToast('無法連接直播源，請檢查網絡或稍後再試。', true);
+                });
+            } else {
+                jazzAudio.pause();
+                dot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-coffee-500";
+                ping.className = "absolute inline-flex h-full w-full rounded-full bg-coffee-400 opacity-0";
+                statusText.textContent = "慢調爵士音樂";
+                showToast('已暫停爵士樂直播。');
+            }
+        }
+
         window.handleImageError = function(img) {
             img.onerror = null;
             img.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%2317120e'/%3E%3Cpath d='M300 140c-44.18 0-80 35.82-80 80s35.82 80 80 80 80-35.82 80-80-35.82-80-80-80zm0 130c-27.61 0-50-22.39-50-50s22.39-50 50-50 50 22.39 50 50-22.39 50-50 50z' fill='%23d97706' opacity='0.3'/%3E%3Ctext x='300' y='290' font-family='sans-serif' font-size='16' fill='%23a89078' text-anchor='middle'%3EBilly's Coffee Roastery%3C/text%3E%3C/svg%3E";
@@ -1136,7 +1165,6 @@
             listEl.innerHTML = '';
             currentStepsData = [];
 
-            // Methods that support taste preference adjustment for the initial pour breakdown
             const supportsTastePref = ['46', 'threeKnife', 'v60Classic', 'chemex', 'kasuyaSwitch', 'emiSwitch', 'konoDrop', 'twoKnifeArtisan'].includes(method);
             tastePrefContainer.style.display = supportsTastePref ? 'block' : 'none';
 

@@ -450,7 +450,7 @@
                 region: 'Ethiopia',
                 process: 'waterfalls',
                 roastDate: '2026-04-08',
-                stockGrams: 165,
+                stockGrams: 135,
                 temp: '89°C - 91°C',
                 notes: ['橙花', '野莓', '佛手柑', '蔗糖韻'],
                 description: '來自咖啡發源地卡法 (Kaffa) 的瑰夏原生品種，細緻的花香與高雅酸質交織。',
@@ -1143,14 +1143,14 @@
 
                 let firstWater, secondWater;
                 if (preference === 'sweet') {
-                    firstWater = Math.round(totalWaterGrams * 0.15);
-                    secondWater = Math.round(totalWaterGrams * 0.55);
+                    firstWater = Math.round(grams * 2);
+                    secondWater = Math.round(totalWaterGrams * 0.15);
                 } else if (preference === 'acidic') {
-                    firstWater = Math.round(totalWaterGrams * 0.25);
-                    secondWater = Math.round(totalWaterGrams * 0.45);
+                    firstWater = Math.round(grams * 2);
+                    secondWater = Math.round(totalWaterGrams * 0.25);
                 } else {
-                    firstWater = Math.round(totalWaterGrams * 0.20);
-                    secondWater = Math.round(totalWaterGrams * 0.50);
+                    firstWater = Math.round(grams * 2);
+                    secondWater = Math.round(totalWaterGrams * 0.20);
                 }
                 const thirdWater = totalWaterGrams - (firstWater + secondWater);
 
@@ -1278,14 +1278,7 @@
             } else if (method === 'twoKnife') {
                 headerTitle.textContent = '兩段式註水法 (Two-Knife Method) 導引';
 
-                let firstWater;
-                if (preference === 'sweet') {
-                    firstWater = Math.round(totalWaterGrams * 0.35);
-                } else if (preference === 'acidic') {
-                    firstWater = Math.round(totalWaterGrams * 0.50);
-                } else {
-                    firstWater = Math.round(totalWaterGrams * 0.40);
-                }
+                const firstWater = Math.round(grams * 2);
                 const secondWater = totalWaterGrams - firstWater;
 
                 currentStepsData = [

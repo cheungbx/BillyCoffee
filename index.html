@@ -1287,7 +1287,7 @@
                 ];
 
             } else if (method === 'kasuyaSwitch') {
-                headerTitle.textContent = '粕谷哲的HARIO Switch沖法導引';
+                headerTitle.textContent = '粕谷哲Hario Switch三段式註水法 導引';
 
                 let w1, w2;
                 if (preference === 'sweet') {
@@ -1311,15 +1311,13 @@
                 ];
 
             } else if (method === 'emiSwitch') {
-                headerTitle.textContent = 'Easy Hario Switch Recipe (Emi Fukahori) 導引';
-
-                const firstWater = Math.min(50, Math.round(grtams * (50 / 14)));
-                const secondWater  = totalWaterGrams - firstWater;
+                headerTitle.textContent = '深堀絵美Easy Hario Switch 兩段式註水法 導引';
+                const firstWater = Math.min(50, Math.round(grams * (50 / 14)));
+                const secondWater = totalWaterGrams - firstWater;
 
                 currentStepsData = [
                     { time: '00:00', title: '第一階段 (Blooming) – 關閉', water: firstWater, cumulative: firstWater, desc: `${firstWater}g 水量 閥門關閉`, valve: 'close' },
-                    { time: '00:30', title: '開啟閥門排乾', water: secondWater, cumulative: firstWater + secondWater, desc: `開啟閥門,定點中心注水 ${secondWater}g `, valve: 'open' },
-                    { time: '02:30', title: '萃取完成', water: 0, cumulative: totalWaterGrams, desc: '2:20 滴濾完成', valve: 'open' }
+                    { time: '00:30', title: '第二階段 (Pouring) - 開啟', water: secondWater, cumulative: totalWaterGrams, desc: `開啟閥門,單次連續中心注水到尾,滴漏完可享用`, valve: 'open' }
                 ];
 
             } else {

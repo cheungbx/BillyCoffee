@@ -1314,8 +1314,8 @@
                 headerTitle.textContent = 'Easy Hario Switch Recipe (Emi Fukahori) 導引';
 
                 const firstWater = Math.min(50, Math.round(grams * (50 / 14)));
-                const secondWater = Math.round(totalWaterGrams * (120 / 300));
-                const thirdWater = totalWaterGrams - firstWater - secondWater;
+    
+                const secondWater = totalWaterGrams - firstWater;
 
                 currentStepsData = [
                     { time: '00:00', title: '第一階段 (Blooming) – 關閉', water: firstWater, cumulative: firstWater, desc: `${firstWater}g 水量 閥門關閉`, valve: 'close' },

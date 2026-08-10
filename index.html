@@ -234,7 +234,7 @@
                         <label class="block text-xs text-coffee-300 mb-1.5 font-medium">沖煮手法選擇</label>
                         <select id="brewMethod" onchange="updateCalculator()" class="w-full bg-coffee-950 border border-coffee-700 rounded-xl px-4 py-2.5 text-coffee-100 text-xs font-medium focus:outline-none focus:border-amberGlow">
                             <option value="46">1. Tetsu Kasuya 4:6 手沖法</option>
-                            <option value="threeKnife">2. 日本職人「三刀流」注水法</option>
+                            <option value="threeKnife" selected>2. 日本職人「三刀流」注水法</option>
                             <option value="konoDrop">3. 河野式「點滴悶蒸」極濃法</option>
                             <option value="iciclesFlow">4. 1:1 黃金「冰釀激流」法</option>
                             <option value="v60Classic">5. Hario V60 經典三段式注水法 </option>
@@ -243,7 +243,7 @@
                             <option value="aeropress">8. 愛樂壓 (AeroPress) 倒沖浸泡壓濾法 </option>
                             <option value="twoKnife">9. 兩段式註水法 (Two-Knife Method)</option>
                             <option value="kasuyaSwitch">10. 粕谷哲的HARIO Switch沖法</option>
-                            <option value="emiSwitch" selected>11. Easy Hario Switch Recipe (Emi Fukahori)</option>
+                            <option value="emiSwitch">11. Easy Hario Switch Recipe (Emi Fukahori)</option>
                         </select>
                     </div>
 
@@ -261,7 +261,7 @@
                         <label class="block text-xs text-coffee-300 mb-1.5 font-medium">口感偏好 (前 40% 水量調控)</label>
                         <select id="tastePreference" onchange="updateCalculator()" class="w-full bg-coffee-950 border border-coffee-700 rounded-xl px-4 py-2.5 text-coffee-100 text-xs font-medium focus:outline-none focus:border-amberGlow">
                             <option value="balanced">均衡標準 (兩段均分: 40g + 40g)</option>
-                            <option value="sweet">甜感加強 (第一段少: 30g + 50g)</option>
+                            <option value="sweet" selected>甜品加強 (第一段少: 30g + 50g)</option>
                             <option value="acidic">明亮果酸 (第一段多: 50g + 30g)</option>
                         </select>
                     </div>
@@ -1320,7 +1320,6 @@
             } else if (method === 'emiSwitch') {
                 headerTitle.textContent = 'Easy Hario Switch Recipe (Emi Fukahori) 導引';
 
-                // Fixed: Dynamically scale Emi's recipe steps based on totalWaterGrams and proportions
                 const firstWater = Math.min(50, Math.round(totalWaterGrams * (50 / 300)));
                 const secondWater = Math.round(totalWaterGrams * (120 / 300));
                 const thirdWater = totalWaterGrams - firstWater - secondWater;

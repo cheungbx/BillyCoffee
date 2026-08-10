@@ -249,12 +249,12 @@
 
                     <div>
                         <label class="block text-xs text-coffee-300 mb-1.5 font-medium">咖啡豆克數 (g)</label>
-                        <input type="number" id="coffeeGrams" value="20" min="10" max="50" oninput="updateCalculator()" class="w-full bg-coffee-950 border border-coffee-700 rounded-xl px-4 py-2.5 text-coffee-100 font-mono text-sm focus:outline-none focus:border-amberGlow">
+                        <input type="number" id="coffeeGrams" value="15" min="10" max="50" oninput="updateCalculator()" class="w-full bg-coffee-950 border border-coffee-700 rounded-xl px-4 py-2.5 text-coffee-100 font-mono text-sm focus:outline-none focus:border-amberGlow">
                     </div>
 
                     <div>
-                        <label class="block text-xs text-coffee-300 mb-1.5 font-medium">粉水比 (1 : <span id="ratioDisplay">15</span>)</label>
-                        <input type="range" id="ratioSlider" min="13" max="18" value="15" step="0.5" oninput="updateCalculator()" class="w-full accent-amberGlow cursor-pointer">
+                        <label class="block text-xs text-coffee-300 mb-1.5 font-medium">粉水比 (1 : <span id="ratioDisplay">16.7</span>)</label>
+                        <input type="range" id="ratioSlider" min="13" max="18" value="16.6667" step="0.0001" oninput="updateCalculator()" class="w-full accent-amberGlow cursor-pointer">
                     </div>
 
                     <div id="tastePreferenceContainer">
@@ -268,7 +268,7 @@
 
                     <div class="pt-4 border-t border-coffee-800 flex justify-between items-center text-sm">
                         <span class="text-coffee-300">總注水量:</span>
-                        <span id="totalWater" class="font-mono font-bold text-amberGlow text-lg">300 g</span>
+                        <span id="totalWater" class="font-mono font-bold text-amberGlow text-lg">250 g</span>
                     </div>
                 </div>
 
@@ -1122,9 +1122,9 @@
 
         function updateCalculator() {
             const method = document.getElementById('brewMethod').value;
-            const grams = parseFloat(document.getElementById('coffeeGrams').value) || 20;
-            const ratio = parseFloat(document.getElementById('ratioSlider').value) || 15;
-            document.getElementById('ratioDisplay').textContent = ratio;
+            const grams = parseFloat(document.getElementById('coffeeGrams').value) || 15;
+            const ratio = parseFloat(document.getElementById('ratioSlider').value) || 16.6667;
+            document.getElementById('ratioDisplay').textContent = ratio.toFixed(1);
 
             const totalWaterGrams = Math.round(grams * ratio);
             document.getElementById('totalWater').textContent = totalWaterGrams + ' g';
@@ -1320,9 +1320,9 @@
             } else if (method === 'emiSwitch') {
                 headerTitle.textContent = 'Easy Hario Switch Recipe (Emi Fukahori) 導引';
 
-                // Fixed: Dynamically scale Emi's recipe steps based on totalWaterGrams (default 300g = 50g + 63g + 187g)
-                const firstWater = Math.min(50, Math.round(totalWaterGrams * 0.2));
-                const secondWater = Math.round(totalWaterGrams * 0.4);
+                // Fixed: Dynamically scale Emi's recipe steps based on totalWaterGrams and proportions
+                const firstWater = Math.min(50, Math.round(totalWaterGrams * (50 / 300)));
+                const secondWater = Math.round(totalWaterGrams * (120 / 300));
                 const thirdWater = totalWaterGrams - firstWater - secondWater;
 
                 currentStepsData = [

@@ -293,7 +293,7 @@
                         </div>
                     </div>
 
-                    <!-- Step breakdown list (Increased size to display 6 steps without scrollbars) -->
+                    <!-- Step breakdown list -->
                     <div class="space-y-3">
                         <h5 id="stepsHeaderTitle" class="text-xs font-mono uppercase tracking-wider text-coffee-400">分段注水指引與秒數</h5>
                         <div id="pourStepsList" class="space-y-2.5 max-h-[460px] overflow-y-auto pr-1">
@@ -414,7 +414,6 @@
     </div>
 
     <script>
-        // Define handleImageError globally at the very top of script execution
         window.handleImageError = function(img) {
             img.onerror = null;
             img.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%2317120e'/%3E%3Cpath d='M300 140c-44.18 0-80 35.82-80 80s35.82 80 80 80 80-35.82 80-80-35.82-80-80-80zm0 130c-27.61 0-50-22.39-50-50s22.39-50 50-50 50 22.39 50 50-22.39 50-50 50z' fill='%23d97706' opacity='0.3'/%3E%3Ctext x='300' y='290' font-family='sans-serif' font-size='16' fill='%23a89078' text-anchor='middle'%3EBilly's Coffee Roastery%3C/text%3E%3C/svg%3E";
@@ -685,7 +684,6 @@
             return processCode;
         }
 
-        // Render Roasted Beans
         function renderRoastedBeans() {
             const container = document.getElementById('roastedBeansGrid');
             container.innerHTML = '';
@@ -769,7 +767,6 @@
             });
         }
 
-        // Render Green Beans
         function renderGreenBeans() {
             const container = document.getElementById('greenBeansGrid');
             container.innerHTML = '';
@@ -828,7 +825,6 @@
             });
         }
 
-        // Filtering & Search
         function filterRegion(region) {
             currentFilter = region;
             document.querySelectorAll('.region-btn').forEach(btn => {
@@ -846,7 +842,6 @@
             renderRoastedBeans();
         }
 
-        // Modal Controls
         function openBeanModal(beanId, type) {
             const list = type === 'roasted' ? roastedBeans : greenBeans;
             const bean = list.find(b => b.id === beanId);
@@ -997,7 +992,6 @@
             modalContainer.classList.add('scale-95');
         }
 
-        // Reservation Cart Logic
         function addToReservation(id, type) {
             const list = type === 'roasted' ? roastedBeans : greenBeans;
             const item = list.find(b => b.id === id);
@@ -1116,7 +1110,6 @@
             }, 3500);
         }
 
-        // Pour-Over Calculator & Timer Logic
         let timerInterval = null;
         let totalSeconds = 0;
         let isRunning = false;
@@ -1327,11 +1320,16 @@
             } else if (method === 'emiSwitch') {
                 headerTitle.textContent = 'Easy Hario Switch Recipe (Emi Fukahori) 導引';
 
+                // Fixed: Dynamically scale Emi's recipe steps based on totalWaterGrams (default 300g = 50g + 63g + 187g)
+                const firstWater = Math.min(50, Math.round(totalWaterGrams * 0.2));
+                const secondWater = Math.round(totalWaterGrams * 0.4);
+                const thirdWater = totalWaterGrams - firstWater - secondWater;
+
                 currentStepsData = [
-                    { time: '00:00', title: '第一階段 (Blooming) – 關閉', water: 50, cumulative: 50, desc: '50 grams of water 關閉', valve: 'close' },
-                    { time: '00:30', title: '開啟閥門排乾/開啓', water: 63, cumulative: 113, desc: '開啓 after 30 seconds', valve: 'open' },
-                    { time: '01:10', title: '第二階段 (Pouring) – 開啟', water: 150, cumulative: 263, desc: '150 grams of water single continuous pour to the centre of the coffee bed.', valve: 'open' },
-                    { time: '02:20', title: '萃取完成', water: 0, cumulative: 263, desc: '2:20 total brew time', valve: 'open' }
+                    { time: '00:00', title: '第一階段 (Blooming) – 關閉', water: firstWater, cumulative: firstWater, desc: `${firstWater}g 水量 閥門關閉`, valve: 'close' },
+                    { time: '00:30', title: '開啟閥門排乾', water: secondWater, cumulative: firstWater + secondWater, desc: `開啟閥門並注入 ${secondWater}g 水量排乾`, valve: 'open' },
+                    { time: '01:10', title: '第二階段 (Pouring) – 開啟', water: thirdWater, cumulative: totalWaterGrams, desc: `注入剩餘 ${thirdWater}g 水量單次連續中心注水`, valve: 'open' },
+                    { time: '02:20', title: '萃取完成', water: 0, cumulative: totalWaterGrams, desc: '2:20 滴濾完成總萃取', valve: 'open' }
                 ];
 
             } else {
@@ -1362,7 +1360,6 @@
                 ];
             }
 
-            // Render steps
             currentStepsData.forEach((step, idx) => {
                 const row = document.createElement('div');
                 row.id = `brew-step-${idx}`;
@@ -1375,7 +1372,6 @@
                     valveHtml = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-950 text-red-400 border border-red-800 mr-2">關閉</span>`;
                 }
 
-                // Display total water quantity in larger green fonts at all times for every step of every brew method
                 const cumulativeHtml = `<div class="cumulative-text text-emerald-400 font-bold text-base sm:text-lg" data-cumulative="${step.cumulative}">累計 ${step.cumulative}g</div>`;
 
                 row.innerHTML = `
@@ -1452,7 +1448,6 @@
             highlightActiveStep();
         }
 
-        // Real Coffee House Jazz Audio Stream
         let sharedAudioEl = null;
         let isAudioPlaying = false;
 

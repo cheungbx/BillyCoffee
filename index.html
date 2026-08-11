@@ -1320,6 +1320,7 @@
                     { time: '00:30', title: '第二階段 (Pouring) - 開啟', water: secondWater, cumulative: totalWaterGrams, desc: `開啟閥門,單次連續中心注水到尾,滴漏完可享用`, valve: 'open' }
                 ];
 
+ 
             } else {
                 headerTitle.textContent = '4:6 階段注水指南';
 
@@ -1337,14 +1338,15 @@
 
                 const remainingWater = totalWaterGrams - (firstPour1 + firstPour2);
                 const thirdPour = Math.round(remainingWater / 3);
-                const fourthPour = totalWaterGrams - (firstPour1 + firstPour2 + thirdPour);
+                const fourthPour = thirdPour;
+                const fifthPour = totalWaterGrams - (firstPour1 + firstPour2 + thirdPour + fourthPour);
 
                 currentStepsData = [
                     { time: '00:00', title: '第一段注水 (前 40% 調控酸甜)', water: firstPour1, cumulative: firstPour1, desc: '穩定細水流繞圈注水，帶出豐富香氣與乾淨口感。' },
                     { time: '00:45', title: '第二段注水 (完成 40% 區間)', water: firstPour2, cumulative: firstPour1 + firstPour2, desc: '等待水位降至一半後再次注水，決定濃度與甜感基調。' },
                     { time: '01:30', title: '第三段注水 (後 60% 第一發)', water: thirdPour, cumulative: firstPour1 + firstPour2 + thirdPour, desc: '開始均勻注水，萃取主體風味。' },
                     { time: '02:15', title: '第四段注水 (後 60% 第二發)', water: fourthPour, cumulative: totalWaterGrams - fourthPour, desc: '平穩注水，補充豐富層次。' },
-                    { time: '03:00', title: '第五段注水 (收尾注水)', water: fourthPour, cumulative: totalWaterGrams, desc: '最後注水至總水量，等待濾杯流乾即完成萃取。' }
+                    { time: '03:00', title: '第五段注水 (收尾注水)', water: fifthPour, cumulative: totalWaterGrams, desc: '最後注水至總水量，等待濾杯流乾即完成萃取。' }
                 ];
             }
 
